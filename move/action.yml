@@ -2,10 +2,10 @@ name: Move to github pages
 description: Moves html to docs folder to display on github pages
 inputs:
   folder_move_from:
-    description: the folder where the html is generated and should be moved/copied from
+    description: the name of the folder where the html is generated and should be moved/copied from
     required: true
-  folder_copy:
-    description: the folder which will contain a copy of the generated html, will be created under /generated/<folder-name>
+  folder_for_html:
+    description: the name of the folder which will contain a copy of the generated html, will be created under /generated/<folder-name>
     required: true
 runs:
   using: node12
