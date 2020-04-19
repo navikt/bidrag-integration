@@ -1,0 +1,31 @@
+name: build actions
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-16.04
+    name: build actions with ncc
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1.4.1
+        with:
+          node-version: '13.x'
+      - run: npm i -g @zeit/ncc
+      - name: Debug workspace
+        run: env
+      - name: Install move
+        uses: navikt/bidrag-node/build-with-ncc@v1
+        with:
+          artifact_folder: actions-gh-pages/move
+      - name: Generate timestamp
+        id: now
+        run: echo ::set-output name=timestamp::$(date +"%Y-%m-%d:%T")
+      - uses: navikt/bidrag-git/commit@v3.0.4
+        with:
+          commit_message: "${{ steps.now.outputs.timestamp }}: Build of actions with npm and ncc"
+          pattern: .
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
