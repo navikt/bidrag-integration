@@ -4,9 +4,6 @@ inputs:
   folder_move_from:
     description: the name of the folder where the html is generated and should be moved/copied from
     required: true
-  folder_for_html:
-    description: the name of the folder which will contain a copy of the generated html, will be created under /generated/<folder-name>
-    required: true
 runs:
   using: node12
   main: dist/index.js

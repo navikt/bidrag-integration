@@ -1,17 +1,6 @@
-# bidrag-actions/git-commit
+# actions-gh-pages/move
 
-This action will commit changed repository files and push to origin
+This action will move files from given directory to the github pages folder (docs) and make a copy of
+the moved files in a date or timestamped folder under docs/generated 
 
-Requires a runner with node and ncc installed. Also the running environment must be able to execute
-bash scripts.
-
-The action requires the commit message. An optional input is a file with content to add to the commit
-message.
-
-If a file containing some commit message content is present, the content will replace {} from the commit
-message provided.
-
-The author information of the commit will be gathered from the GITHUB_EVENT. If no event is present, the
-following information will be used:
-- Author name: Tag & Commit Action
-- Author email: navikt.bidrag-actions.git-commit@github.com
+Requires a runner that executes in bash environment. 
