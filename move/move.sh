@@ -7,7 +7,7 @@ set -e
 # 1) setter input fra script (mappe hvor innhold skal kopieres og flyttes fra)
 # 2) oppretter generert mappe under docs/generated
 # 3) kopierer generert html til generert mappe
-# 4) sletter gamle redigerte html mapper rett under docs mappa
+# 4) sletter gamle genererte html mapper rett under docs mappa
 # 5) flytter (og overskriver gammel) generert html til github pages (docs mappa)
 #
 ############################################
