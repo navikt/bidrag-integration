@@ -7,7 +7,7 @@ async function run() {
 
     // Execute tag bash script
     await exec.exec(
-        `bash ${__dirname}/../move.sh "${folderMoveFrom}" "${folderForHtml}"`
+        `bash ${__dirname}/../move.sh "${folderMoveFrom}"`
     );
 
   } catch (error) {
