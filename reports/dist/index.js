@@ -714,12 +714,10 @@ const exec = __webpack_require__(120);
 
 async function run() {
   try {
-    const folderMoveFrom = core.getInput('folder_move_from');
+    const pagesAddress = core.getInput('pages_address');
 
     // Execute tag bash script
-    await exec.exec(
-        `bash ${__dirname}/../move.sh "${folderMoveFrom}"`
-    );
+    await exec.exec(`bash ${__dirname}/../reports.sh "${pagesAddress}"`);
 
   } catch (error) {
     core.setFailed(error.message);

@@ -1,5 +1,5 @@
 name: Move to github pages
-description: Moves html of ccumber reports to docs folder to display on github pages
+description: Moves html of cumber reports to docs folder to display on github pages
 inputs:
   folder_move_from:
     description: the name of the folder where the html is generated and should be moved/copied from

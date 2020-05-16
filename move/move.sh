@@ -3,6 +3,11 @@ set -e
 
 ############################################
 #
+# Følgende forutsetninger for dette skriptet
+# - github pages befinner seg under mappa docs
+# - sist genererte rapport lagges under mappe docs/latest
+# - eldre genererte rapporter ligger under mappa docs/generated/<date or timestamp>
+#
 # Følgende skjer i dette skriptet:
 # 1) setter input fra script (mappe hvor innhold skal kopieres og flyttes fra)
 # 2) oppretter generert mappe under docs/generated
@@ -12,12 +17,12 @@ set -e
 #
 ############################################
 
-INPUT_FOLDER_MOVE_FROM=$1
-
 if [[ $# -ne 1 ]]; then
   echo "Usage: report.sh [relative/path/to/html/folder/to/move]"
   exit 1;
 fi
+
+INPUT_FOLDER_MOVE_FROM=$1
 
 PROJECT_ROOT=${PWD}
 
