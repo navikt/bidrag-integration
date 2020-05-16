@@ -1497,7 +1497,7 @@ async function run() {
     const pagesAddress = core.getInput('pages_address');
 
     // Execute tag bash script
-    await exec.exec(`bash ${__dirname}/../reports.sh "${pagesAddress}"`);
+    await exec.exec(`bash ${__dirname}/../report.sh "${pagesAddress}"`);
 
   } catch (error) {
     core.setFailed(error.message);
