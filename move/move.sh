@@ -24,7 +24,9 @@ fi
 
 INPUT_FOLDER_MOVE_FROM=$1
 
-PROJECT_ROOT=${PWD}
+PROJECT_ROOT="$PWD"
+GH_PAGES_GENERATED="$PROJECT_ROOT/docs/generated"
+GH_PAGES_RECENT="$PROJECT_ROOT/docs/recent"
 
 if [[ ! -d "$PROJECT_ROOT/$INPUT_FOLDER_MOVE_FROM" ]]; then
   echo ::error:: "unable to locate folder to move from $PROJECT_ROOT/$INPUT_FOLDER_MOVE_FROM"
@@ -33,8 +35,8 @@ fi
 
 GENERATED_FOLDER=$(date +"%Y-%m-%d")
 
-if [[ -d "$PROJECT_ROOT/docs/generated/$GENERATED_FOLDER" ]]; then
-  GENERATED_FOLDER=$(date +"%Y-%m-%d0.%T")
+if [[ -d "$GH_PAGES_GENERATED/$GENERATED_FOLDER" ]]; then
+  GENERATED_FOLDER=$(date +"%Y-%m-%d.%T")
 fi
 
 echo "Flytter html fra mappe $PROJECT_ROOT/$INPUT_FOLDER_MOVE_FROM til mappe $PROJECT_ROOT/docs/latest"
