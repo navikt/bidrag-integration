@@ -25,6 +25,6 @@ INPUT_PAGES_ADDRESS=$1
 cat README.md > docs/index.md
 cd docs/generated
 
-for folder in ls -d -r; do
-  echo "$INPUT_PAGES_ADDRESS/generated/$folder" >> ../index.md
+for folder in $(ls -d -r */); do
+  echo "[$folder]($INPUT_PAGES_ADDRESS/generated/$folder)" >> ../index.md
 done
