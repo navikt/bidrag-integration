@@ -3,22 +3,26 @@ set -e
 
 ############################################
 #
+# Følgende forutsetninger for dette skriptet
+# - github pages befinner seg under mappa docs
+# - sist genererte rapport lagges under mappe docs/latest
+# - eldre genererte rapporter ligger under mappa docs/generated/<date or timestamp>
+#
 # Følgende skjer i dette skriptet:
 # 1) setter input fra script (mappe hvor innhold skal kopieres og flyttes fra)
 # 2) oppretter generert mappe under docs/generated
 # 3) kopierer generert html til generert mappe
-# 4) sletter gamle genererte html under docs/recent mappa
-# 5) flytter (og overskriver gammel) generert html til github pages (docs/recent mappa)
-# 6) for hver generert mappe, lag en link i docs/index.md
+# 4) sletter gamle genererte html mapper rett under docs/latest mappa
+# 5) flytter (og overskriver gammel) generert html til github pages (docs/latest mappa)
 #
 ############################################
 
-INPUT_FOLDER_MOVE_FROM=$1
-
 if [[ $# -ne 1 ]]; then
-  echo "Usage: move.sh [relative/path/to/html/folder/to/move]"
+  echo "Usage: report.sh [relative/path/to/html/folder/to/move]"
   exit 1;
 fi
+
+INPUT_FOLDER_MOVE_FROM=$1
 
 PROJECT_ROOT="$PWD"
 GH_PAGES_GENERATED="$PROJECT_ROOT/docs/generated"
@@ -35,18 +39,10 @@ if [[ -d "$GH_PAGES_GENERATED/$GENERATED_FOLDER" ]]; then
   GENERATED_FOLDER=$(date +"%Y-%m-%d.%T")
 fi
 
-echo "Flytter html fra mappe $PROJECT_ROOT/$INPUT_FOLDER_MOVE_FROM til mappe $GH_PAGES_RECENT"
-echo "Oppretter også en kopi i $GH_PAGES_GENERATED/$GENERATED_FOLDER"
+echo "Flytter html fra mappe $PROJECT_ROOT/$INPUT_FOLDER_MOVE_FROM til mappe $PROJECT_ROOT/docs/latest"
+echo "Oppretter også en kopi i $PROJECT_ROOT/docs/generated/$GENERATED_FOLDER"
 
-mkdir "$GH_PAGES_GENERATED/$GENERATED_FOLDER"
-cp -R "$PROJECT_ROOT/$INPUT_FOLDER_MOVE_FROM/*" "$GH_PAGES_GENERATED/$GENERATED_FOLDER/."
-cd "$GH_PAGES_RECENT" && rm -rf *
-sudo mv "$PROJECT_ROOT/$INPUT_FOLDER_MOVE_FROM/* ."
-
-cd "$PROJECT_ROOT/docs"
-INDEX=$(cat index.md)
-
-for file in $(ls -r -F docs/generated/. | grep -v .md | grep -v generated)
-INDEX=INDEX+"Cucumber reports at [$file](https://jactor-rises.github.io/jactor-cucumber/generated/$file)"
-
-echo "$INDEX" > index.md
+mkdir ${PROJECT_ROOT}/docs/generated/${GENERATED_FOLDER}
+cp -R ${PROJECT_ROOT}/${INPUT_FOLDER_MOVE_FROM}/* ${PROJECT_ROOT}/docs/generated/${GENERATED_FOLDER}/.
+cd ${PROJECT_ROOT}/docs/latest && ls |  xargs rm -rf
+sudo mv ${PROJECT_ROOT}/${INPUT_FOLDER_MOVE_FROM}/* .

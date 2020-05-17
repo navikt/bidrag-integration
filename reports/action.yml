@@ -1,0 +1,9 @@
+name: Cucumber Reports
+description: Links cucumber reports to copy of README.md (index.md) in docs folder (folder for github pages)
+inputs:
+  pages_address:
+    description: the github pages address for this project
+    required: true
+runs:
+  using: node12
+  main: dist/index.js
