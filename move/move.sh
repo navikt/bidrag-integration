@@ -18,18 +18,21 @@ set -x
 ############################################
 
 if [[ $# -ne 1 ]]; then
-  echo "Usage: report.sh [relative/path/to/html/folder/to/move]"
+  echo "Usage: report.sh [relative/path/to/html/folder/for/generated/html]"
   exit 1;
 fi
 
 INPUT_FOLDER_MOVE_FROM=$1
 
+ls -all ../bidrag-cucumber-backend || true
+ls -all ../bidrag-cucumber-backend/target || true
+ls -all ../../bidrag-cucumber-backend || true
+ls -all ../..bidrag-cucumber-backend/target || true
+
 PROJECT_ROOT="$PWD"
 GH_PAGES_GENERATED="$PROJECT_ROOT/docs/generated"
 
 if [[ ! -d "$PROJECT_ROOT/$INPUT_FOLDER_MOVE_FROM" ]]; then
-  pwd
-  ls -al ../..
   echo ::error:: "unable to locate folder to move from $PROJECT_ROOT/$INPUT_FOLDER_MOVE_FROM"
   exit 1;
 fi
