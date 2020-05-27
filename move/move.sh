@@ -23,12 +23,6 @@ if [[ $# -ne 1 ]]; then
 fi
 
 INPUT_FOLDER_MOVE_FROM=$1
-
-ls -all ../bidrag-cucumber-backend || true
-ls -all ../bidrag-cucumber-backend/target || true
-ls -all ../../bidrag-cucumber-backend || true
-ls -all ../..bidrag-cucumber-backend/target || true
-
 PROJECT_ROOT="$PWD"
 GH_PAGES_GENERATED="$PROJECT_ROOT/docs/generated"
 
@@ -45,6 +39,8 @@ if [[ -d "$GH_PAGES_GENERATED/$GENERATED_FOLDER" ]]; then
   GENERATED_FOLDER=$(date +"%Y-%m-%d.%T")
 fi
 
+mkdir GENERATED_FOLDER
+
 GH_PAGES_LATEST="$PROJECT_ROOT/docs/latest"
 
 echo "Flytter html fra mappe $PROJECT_ROOT/$INPUT_FOLDER_MOVE_FROM til mappe $GH_PAGES_LATEST"
@@ -52,5 +48,5 @@ echo "Oppretter også en kopi i $PROJECT_ROOT/docs/generated/$GENERATED_FOLDER"
 
 mkdir ${PROJECT_ROOT}/docs/generated/${GENERATED_FOLDER}
 cp -R ${PROJECT_ROOT}/${INPUT_FOLDER_MOVE_FROM}/* ${PROJECT_ROOT}/docs/generated/${GENERATED_FOLDER}/.
-cd ${PROJECT_ROOT}/docs/latest && ls |  xargs rm -rf
+cd ${PROJECT_ROOT}/docs/latest && ls | xargs rm -rf
 sudo mv ${PROJECT_ROOT}/${INPUT_FOLDER_MOVE_FROM}/* .
