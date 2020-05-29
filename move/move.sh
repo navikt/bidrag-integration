@@ -9,7 +9,7 @@ set -x
 # - alle genererte rapporter ligger under mappa docs/generated/<date or timestamp>
 #
 # Følgende skjer i dette skriptet:
-# 1) setter miljørvariabler
+# 1) setter input og alle FULL_PATH variabler ut fra $PWD/..
 # 2) oppretter generert mappe under docs/generated (oppretter timestampted mappe hvis dato-mappe finnes)
 # 3) kopierer generert html til generert mappe
 # 4) sletter gamle genererte html mapper rett under docs/latest mappa
@@ -24,6 +24,8 @@ fi
 
 INPUT_FOLDER_MOVE_FROM=$1
 INPUT_PROJECT_WHERE_TO_MOVE=$2
+
+CD ..
 
 FULL_PATH_TO_MOVE_FOLDER="$PWD/$(find . -d | grep "$INPUT_FOLDER_MOVE_FROM")"
 FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/README.md" | sed 's;/README.md;;')"
