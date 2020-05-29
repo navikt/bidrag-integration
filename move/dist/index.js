@@ -1505,7 +1505,7 @@ async function run() {
 
     // Execute tag bash script
     await exec.exec(
-        `bash ${__dirname}/../move.sh "${folderMoveFrom} ${projectWhereToMove}`
+        `bash ${__dirname}/../move.sh "${folderMoveFrom}" "${projectWhereToMove}"`
     );
 
   } catch (error) {
