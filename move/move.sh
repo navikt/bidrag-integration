@@ -6,7 +6,7 @@ set -x
 # Følgende forutsetninger for dette skriptet
 # - github pages befinner seg under mappa docs
 # - sist genererte rapport lagges under mappe docs/latest
-# - eldre genererte rapporter ligger under mappa docs/generated/<date or timestamp>
+# - alle genererte rapporter ligger under mappa docs/generated/<date or timestamp>
 #
 # Følgende skjer i dette skriptet:
 # 1) setter input fra script (mappe hvor innhold skal kopieres og flyttes fra)
@@ -39,7 +39,7 @@ if [[ -d "$GH_PAGES_GENERATED/$GENERATED_FOLDER" ]]; then
   GENERATED_FOLDER=$(date +"%Y-%m-%d.%T")
 fi
 
-mkdir GENERATED_FOLDER
+mkdir $GENERATED_FOLDER
 
 GH_PAGES_LATEST="$PROJECT_ROOT/docs/latest"
 
