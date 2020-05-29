@@ -27,8 +27,8 @@ INPUT_PROJECT_WHERE_TO_MOVE=$2
 
 cd ..
 
-FULL_PATH_TO_MOVE_FOLDER="$PWD/$(find . -d | grep "$INPUT_FOLDER_MOVE_FROM")"
-FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/README.md" | sed 's;/README.md;;')"
+FULL_PATH_TO_MOVE_FOLDER="$PWD/$(find . -type d | grep "$INPUT_FOLDER_MOVE_FROM" | sed 1q)" # first line of directory match
+FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/README.md" | sed 's;/README.md;;')" # remove /README.md from string
 FULL_PATH_TO_DOCS_LATEST="$FULL_PATH_TO_ROOT_PROJECT/docs/latest"
 FULL_PATH_TO_DOCS_GENERATED="$FULL_PATH_TO_ROOT_PROJECT/docs/generated"
 
