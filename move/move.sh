@@ -17,8 +17,8 @@ set -x
 #
 ############################################
 
-if [[ $# -ne 1 ]]; then
-  echo "Usage: report.sh [path/to/html/folder/for/generated/html]"
+if [[ $# -ne 2 ]]; then
+  echo "Usage: report.sh <path/to/html/folder/for/generated/html> <project-name>"
   exit 1;
 fi
 
