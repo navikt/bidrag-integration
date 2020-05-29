@@ -27,7 +27,7 @@ INPUT_PROJECT_WHERE_TO_MOVE=$2
 
 cd ..
 
-FIRST_LINE_PATH_TO_MOVE_FOLDER=$(find . -type d | grep "$INPUT_FOLDER_MOVE_FROM" | sed 1w) # first line of directory match
+FIRST_LINE_PATH_TO_MOVE_FOLDER=$(find . -type d | grep "$INPUT_FOLDER_MOVE_FROM" | sed 1q) # first line of directory match
 FULL_PATH_TO_MOVE_FOLDER="$PWD/$(echo "$FIRST_LINE_PATH_TO_MOVE_FOLDER" | sed 's,^ *,,; s, *$,,')" # concat with PWD and remove leading and trailing whitespaces from first line
 FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/README.md" | sed 's;/README.md;;')" # remove /README.md from string
 FULL_PATH_TO_DOCS_LATEST="$FULL_PATH_TO_ROOT_PROJECT/docs/latest"
@@ -38,7 +38,7 @@ FULL_PATH_TO_ROOT_PROJECT=$(echo "$FULL_PATH_TO_ROOT_PROJECT" | sed 's;/./;/;')
 FULL_PATH_TO_DOCS_LATEST=$(echo "$FULL_PATH_TO_DOCS_LATEST" | sed 's;/./;/;')
 FULL_PATH_TO_DOCS_GENERATED=$(echo "$FULL_PATH_TO_DOCS_GENERATED" | sed 's;/./;/;')
 
-if [[ ! -d "$FULL_PATH_TO_ROOT_PROJECT/$INPUT_FOLDER_MOVE_FROM" ]]; then
+if [[ ! -d "$FULL_PATH_TO_MOVE_FOLDER" ]]; then
   echo ::error:: "unable to locate folder to move from - $INPUT_FOLDER_MOVE_FROM (using full path: $FULL_PATH_TO_MOVE_FOLDER)"
   exit 1;
 fi
