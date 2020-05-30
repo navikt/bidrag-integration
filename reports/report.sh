@@ -15,15 +15,18 @@ set -x
 #
 ############################################
 
-if [[ $# -ne 1 ]]; then
-  echo "Bruk: report.sh [<organisasjon>.github.io/<prosjekt>]"
+if [[ $# -ne 2 ]]; then
+  echo "Bruk: report.sh <organisasjon>.github.io/<prosjekt> <project where to move>"
   exit 1;
 fi
 
 INPUT_PAGES_ADDRESS=$1
+INPUT_PROJECT_WHERE_TO_MOVE=$2
 
-cat README.md > docs/index.md
-cd docs/generated
+FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/README.md" | sed 's;/README.md;;')" # remove /README.md from string
+
+cat README.md > "$FULL_PATH_TO_ROOT_PROJECT/docs/index.md"
+cd "$FULL_PATH_TO_ROOT_PROJECT/docs/generated" || exit 1;
 
 for folder in $(ls -d -r */); do
   FOLDER_NAME=$(echo $folder | sed 's;/;;')
