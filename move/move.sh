@@ -33,10 +33,10 @@ FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO
 FULL_PATH_TO_DOCS_LATEST="$FULL_PATH_TO_ROOT_PROJECT/docs/latest"
 FULL_PATH_TO_DOCS_GENERATED="$FULL_PATH_TO_ROOT_PROJECT/docs/generated"
 
-FULL_PATH_TO_MOVE_FOLDER=$(echo "$FULL_PATH_TO_MOVE_FOLDER" | sed 's;/./;/;')
-FULL_PATH_TO_ROOT_PROJECT=$(echo "$FULL_PATH_TO_ROOT_PROJECT" | sed 's;/./;/;')
-FULL_PATH_TO_DOCS_LATEST=$(echo "$FULL_PATH_TO_DOCS_LATEST" | sed 's;/./;/;')
-FULL_PATH_TO_DOCS_GENERATED=$(echo "$FULL_PATH_TO_DOCS_GENERATED" | sed 's;/./;/;')
+FULL_PATH_TO_MOVE_FOLDER=$(echo "$FULL_PATH_TO_MOVE_FOLDER" | sed 's;/./;/;' | sed "s/'//")       # replace /./ with / and remove '
+FULL_PATH_TO_ROOT_PROJECT=$(echo "$FULL_PATH_TO_ROOT_PROJECT" | sed 's;/./;/;' | sed "s/'//")     # replace /./ with / and remove '
+FULL_PATH_TO_DOCS_LATEST=$(echo "$FULL_PATH_TO_DOCS_LATEST" | sed 's;/./;/;' | sed "s/'//")       # replace /./ with / and remove '
+FULL_PATH_TO_DOCS_GENERATED=$(echo "$FULL_PATH_TO_DOCS_GENERATED" | sed 's;/./;/;' | sed "s/'//") # replace /./ with / and remove '
 
 if [[ ! -d "$FULL_PATH_TO_MOVE_FOLDER" ]]; then
   echo ::error:: "unable to locate folder to move from - $INPUT_FOLDER_MOVE_FROM (using full path: $FULL_PATH_TO_MOVE_FOLDER)"
@@ -57,7 +57,6 @@ mkdir "$FULL_PATH_TO_GENERATED_FOLDER"
 echo "Flytter html fra mappe $FULL_PATH_TO_MOVE_FOLDER til mappe $FULL_PATH_TO_DOCS_LATEST"
 echo "Oppretter også en kopi i $FULL_PATH_TO_GENERATED_FOLDER"
 
-mkdir "$FULL_PATH_TO_GENERATED_FOLDER"
 cp -R "$FULL_PATH_TO_MOVE_FOLDER/*" "$FULL_PATH_TO_GENERATED_FOLDER/."
 cd "$FULL_PATH_TO_DOCS_LATEST" && ls | xargs sudo rm -rf
 sudo mv "$FULL_PATH_TO_MOVE_FOLDER/*" .
