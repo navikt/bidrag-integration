@@ -57,6 +57,6 @@ mkdir "$FULL_PATH_TO_GENERATED_FOLDER"
 echo "Flytter html fra mappe $FULL_PATH_TO_MOVE_FOLDER til mappe $FULL_PATH_TO_DOCS_LATEST"
 echo "Oppretter også en kopi i $FULL_PATH_TO_GENERATED_FOLDER"
 
-cp -R "$FULL_PATH_TO_MOVE_FOLDER/*" "$FULL_PATH_TO_GENERATED_FOLDER/."
+cp -R "$FULL_PATH_TO_MOVE_FOLDER"/* "$FULL_PATH_TO_GENERATED_FOLDER"/.
 cd "$FULL_PATH_TO_DOCS_LATEST" && ls | xargs sudo rm -rf
-sudo mv "$FULL_PATH_TO_MOVE_FOLDER/*" .
+sudo mv "$FULL_PATH_TO_MOVE_FOLDER"/* .
