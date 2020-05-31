@@ -9,9 +9,10 @@ set -x
 # - eldre genererte rapporter blir lagt under mappa docs/generated/<date or timestamp>
 #
 # Følgende skjer i dette skriptet:
-# 1) setter input (addresse til github pages for prosjektet)
+# 1) setter input (addresse til github pages for prosjektet og navnet til prosjektet)
 # 2) leser prosjektets README.md og lagrer den teksten under docs/index.md
-# 3) legger til linker til de eldre genererte rapportene
+# 3) legger siste genererte integrasjonsrapport inn under docs/latest
+# 4) legger til linker for alle genererte rapporter under docs/inndex.md som peker til docs/generated/<dato-tid>
 #
 ############################################
 
@@ -25,11 +26,11 @@ INPUT_PROJECT_WHERE_TO_MOVE=$2
 
 FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/README.md" | sed 's;/README.md;;')" # remove /README.md from string
 
-cat README.md > "$FULL_PATH_TO_ROOT_PROJECT/docs/index.md"
+cat "$FULL_PATH_TO_ROOT_PROJECT/README.md" > "$FULL_PATH_TO_ROOT_PROJECT/docs/index.md"
 cd "$FULL_PATH_TO_ROOT_PROJECT/docs/generated" || exit 1;
 
 for folder in $(ls -d -r */); do
+  echo "lager link til $folder..."
   FOLDER_NAME=$(echo $folder | sed 's;/;;')
-  echo "Tests for [$FOLDER_NAME]($INPUT_PAGES_ADDRESS/generated/$folder)
-" >> ../index.md
+  echo "Tests at [$FOLDER_NAME]($INPUT_PAGES_ADDRESS/generated/$folder) <br>" >> "$FULL_PATH_TO_ROOT_PROJECT/docs/index.md"
 done

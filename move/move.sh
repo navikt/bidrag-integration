@@ -18,7 +18,7 @@ set -e
 ############################################
 
 if [[ $# -ne 2 ]]; then
-  echo "Usage: report.sh <path/to/html/folder/for/generated/html> <project-name>"
+  echo "Usage: mova.sh <path/to/html/folder/for/generated/html> <project where to move>"
   exit 1;
 fi
 
