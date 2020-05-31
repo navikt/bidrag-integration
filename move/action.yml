@@ -4,6 +4,9 @@ inputs:
   folder_move_from:
     description: the name of the folder where the html is generated and should be moved/copied from
     required: true
+  project_where_to_move:
+    description: the name the project where to move the generated html (expects to find a README.md at this root folder).
+    required: true
 runs:
   using: node12
   main: dist/index.js

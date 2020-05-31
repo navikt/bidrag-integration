@@ -19,7 +19,13 @@ module.exports =
 /******/ 		};
 /******/
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		var threw = true;
+/******/ 		try {
+/******/ 			modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 			threw = false;
+/******/ 		} finally {
+/******/ 			if(threw) delete installedModules[moduleId];
+/******/ 		}
 /******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
@@ -1495,9 +1501,12 @@ const exec = __webpack_require__(960);
 async function run() {
   try {
     const pagesAddress = core.getInput('pages_address');
+    const projectWhereToMove = core.getInput('project_where_to_move');
 
     // Execute tag bash script
-    await exec.exec(`bash ${__dirname}/../report.sh "${pagesAddress}"`);
+    await exec.exec(
+        `bash ${__dirname}/../report.sh "${pagesAddress}" "${projectWhereToMove}"`
+    );
 
   } catch (error) {
     core.setFailed(error.message);
