@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -x
 
 ############################################
 #
@@ -19,7 +19,7 @@ set -e
 ############################################
 
 if [[ $# -ne 3 ]]; then
-  echo "Usage: mova.sh <path/to/html/folder/for/generated/html> <project where to move> <project front page"
+  echo "Usage: mova.sh <path/to/html/folder/for/generated/html> <project where to move> <project front page>"
   exit 1;
 fi
 
