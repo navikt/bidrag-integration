@@ -7,6 +7,10 @@ inputs:
   project_where_to_move:
     description: the name the project where to move the generated html (expects to find a README.md at this root folder).
     required: true
+  front_page:
+    description: name of file to be used as front page for the gh-pages, defaults to README.md
+    required: true
+    default: README.md
 runs:
   using: node12
   main: dist/index.js

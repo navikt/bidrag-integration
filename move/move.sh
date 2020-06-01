@@ -4,6 +4,7 @@ set -e
 ############################################
 #
 # Følgende forutsetninger for dette skriptet
+# - github prosjektets "front-page" beginner seg som "template" fil i rot-mappa til prosjektet
 # - github pages befinner seg under mappa docs
 # - sist genererte rapport lagges under mappe docs/latest
 # - alle genererte rapporter ligger under mappa docs/generated/<date or timestamp>
@@ -17,21 +18,22 @@ set -e
 #
 ############################################
 
-if [[ $# -ne 2 ]]; then
-  echo "Usage: mova.sh <path/to/html/folder/for/generated/html> <project where to move>"
+if [[ $# -ne 3 ]]; then
+  echo "Usage: mova.sh <path/to/html/folder/for/generated/html> <project where to move> <project front page>"
   exit 1;
 fi
 
 INPUT_FOLDER_MOVE_FROM=$1
 INPUT_PROJECT_WHERE_TO_MOVE=$2
+INPUT_FRONT_PAGE=$3
 
 cd ..
 
 FIRST_LINE_PATH_TO_MOVE_FOLDER=$(find . -type d | grep "$INPUT_FOLDER_MOVE_FROM" | sed 1q) # first line of directory match
 FULL_PATH_TO_MOVE_FOLDER="$PWD/$(echo "$FIRST_LINE_PATH_TO_MOVE_FOLDER" | sed 's,^ *,,; s, *$,,')" # concat with PWD and remove leading and trailing whitespaces from first line
-FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/README.md" | sed 's;/README.md;;')" # remove /README.md from string
-FULL_PATH_TO_DOCS_LATEST="$FULL_PATH_TO_ROOT_PROJECT/docs/latest"
-FULL_PATH_TO_DOCS_GENERATED="$FULL_PATH_TO_ROOT_PROJECT/docs/generated"
+FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/$INPUT_FRONT_PAGE" | sed "s;/$INPUT_FRONT_PAGE;;")" # remove front page from string
+FULL_PATH_TO_DOCS_LATEST=$(echo "$FULL_PATH_TO_ROOT_PROJECT/docs/latest" | sed 's;//;/;') # replace // with / in path
+FULL_PATH_TO_DOCS_GENERATED=$(echo "$FULL_PATH_TO_ROOT_PROJECT/docs/generated" | sed 's;//;/;') # replace // with / in path
 
 FULL_PATH_TO_MOVE_FOLDER=$(echo "$FULL_PATH_TO_MOVE_FOLDER" | sed 's;/./;/;' | sed "s/'//")       # replace /./ with / and remove '
 FULL_PATH_TO_ROOT_PROJECT=$(echo "$FULL_PATH_TO_ROOT_PROJECT" | sed 's;/./;/;' | sed "s/'//")     # replace /./ with / and remove '
