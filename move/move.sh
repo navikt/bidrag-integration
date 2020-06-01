@@ -32,8 +32,8 @@ cd ..
 FIRST_LINE_PATH_TO_MOVE_FOLDER=$(find . -type d | grep "$INPUT_FOLDER_MOVE_FROM" | sed 1q) # first line of directory match
 FULL_PATH_TO_MOVE_FOLDER="$PWD/$(echo "$FIRST_LINE_PATH_TO_MOVE_FOLDER" | sed 's,^ *,,; s, *$,,')" # concat with PWD and remove leading and trailing whitespaces from first line
 FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/$INPUT_FRONT_PAGE" | sed "s;/$INPUT_FRONT_PAGE;;")" # remove front page from string
-FULL_PATH_TO_DOCS_LATEST="$FULL_PATH_TO_ROOT_PROJECT/docs/latest"
-FULL_PATH_TO_DOCS_GENERATED="$FULL_PATH_TO_ROOT_PROJECT/docs/generated"
+FULL_PATH_TO_DOCS_LATEST=$(echo "$FULL_PATH_TO_ROOT_PROJECT/docs/latest" | sed 's;//;/;') # replace // with / in path
+FULL_PATH_TO_DOCS_GENERATED=$(echo "$FULL_PATH_TO_ROOT_PROJECT/docs/generated" | sed 's;//;/;') # replace // with / in path
 
 FULL_PATH_TO_MOVE_FOLDER=$(echo "$FULL_PATH_TO_MOVE_FOLDER" | sed 's;/./;/;' | sed "s/'//")       # replace /./ with / and remove '
 FULL_PATH_TO_ROOT_PROJECT=$(echo "$FULL_PATH_TO_ROOT_PROJECT" | sed 's;/./;/;' | sed "s/'//")     # replace /./ with / and remove '
