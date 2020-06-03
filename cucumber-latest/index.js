@@ -8,7 +8,7 @@ async function run() {
 
     // Execute tag bash script
     await exec.exec(
-        `bash ${__dirname}/../report.sh "${filepath}" "'${jsonPath}'"`
+        `bash ${__dirname}/../report.sh "${filepath}" "${jsonPath}"`
     );
 
   } catch (error) {
