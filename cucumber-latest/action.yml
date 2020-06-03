@@ -1,0 +1,17 @@
+name: status siste cucumber-repport
+description: hent antall ok/feilede teststeg fra cucumber.json
+inputs:
+  relative_filepath:
+    description: relativ filsti til json som skal brukes for å lese antall tester som er ok eller har feil
+    required: true
+  json_path:
+    description: json path til statusfeltet til resultatet av hvert steg
+    required: true
+outputs:
+  steps_failed:
+    description: antall feilede tester ihht cucumber.json
+  steps_passed:
+    description: antall tester som har kjørt ok ihht cucumber.json
+runs:
+  using: node12
+  main: dist/index.js
