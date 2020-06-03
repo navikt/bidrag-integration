@@ -10,7 +10,7 @@ set -e
 # - eldre genererte rapporter blir lagt under mappa docs/generated/<date or timestamp>
 #
 # Følgende skjer i dette skriptet:
-# 1) setter input (addresse til github pages for prosjektet og navnet til prosjektet)
+# 1) setter input (addresse til github pages for prosjektet, navnet til prosjektet og prosjektets forside)
 # 2) leser prosjektets README.md og lagrer den teksten under docs/index.md
 # 3) legger siste genererte integrasjonsrapport inn under docs/latest
 # 4) legger til linker for alle genererte rapporter under docs/inndex.md som peker til docs/generated/<dato-tid>
