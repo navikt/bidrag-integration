@@ -8,6 +8,10 @@ async function run() {
     const failed = core.getInput('failed');
     const pagesFolder = core.getInput('ghp_folder');
 
+    core.info(
+        `frontPage "${frontPage}", passed "${passed}", failed "${failed}", pagesFolder "${pagesFolder}"`
+    );
+
     // Execute bash script
     await exec.exec(
         `bash ${__dirname}/../status.sh "${frontPage}" "${passed}" "${failed}" "${pagesFolder}"`
