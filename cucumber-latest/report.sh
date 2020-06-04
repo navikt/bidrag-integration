@@ -4,7 +4,7 @@ set -e
 ############################################
 #
 # Følgende forutsetninger for dette skriptet
-# - input til skriptet inneholder full filsti en cucumber json fil
+# - input til skriptet inneholder relativ filsti en cucumber json fil
 # - input til skriptet inneholder json path til status for hvert steg til alle cucumber testene
 #
 # Følgende skjer i dette skriptet:
