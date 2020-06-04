@@ -1,0 +1,21 @@
+name: status for cucumber kjøring
+description: enkel markdown for en status på en cucumber kjøring
+inputs:
+  front_page:
+    description: filnavn til markdown side som skal oppdateres med status (kan være en relativ sti)
+    required: true
+  passed:
+    description: antall teststeg som er ok
+    required: true
+  failed:
+    description: antall feilede teststeg
+    required: true
+  ghp_folder:
+    description: mappe til "github pages" i prosjektet
+    required: true
+outputs:
+  edited_page:
+    description: full filsti til fil som er basert på markdown-side som input og er oppdatert med status
+runs:
+  using: node12
+  main: dist/index.js
