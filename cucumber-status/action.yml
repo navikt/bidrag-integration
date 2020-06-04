@@ -3,7 +3,8 @@ description: enkel markdown for en status på en cucumber kjøring
 inputs:
   front_page:
     description: filnavn til markdown side som skal oppdateres med status (kan være en relativ sti)
-    required: true
+    required: false
+    default: front-page.md
   passed:
     description: antall teststeg som er ok
     required: true
