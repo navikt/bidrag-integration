@@ -8,7 +8,7 @@ async function run() {
     const failed = core.getInput('failed');
     const pagesFolder = core.getInput('ghp_folder');
 
-    // Execute tag bash script
+    // Execute bash script
     await exec.exec(
         `bash ${__dirname}/../status.sh "${frontPage}" "${passed}" "${failed}" "${pagesFolder}"`
     );
