@@ -10,9 +10,14 @@ inputs:
   failed:
     description: antall feilede teststeg
     required: true
+  project_name:
+    description: prosjektnavnet som skal ha oppdatert "github_page"
+    required: false
+    default: bidrag-dev
   ghp_folder:
     description: mappe til "github pages" i prosjektet
-    required: true
+    required: false
+    default: docs
 outputs:
   edited_page:
     description: full filsti til fil som er basert på markdown-side som input og er oppdatert med status
