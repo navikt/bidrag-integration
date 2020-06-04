@@ -18,8 +18,8 @@ set -e
 #
 ############################################
 
-if [[ $# -ne 3 ]]; then
-  echo "Bruk: report.sh <organisasjon>.github.io/<prosjekt> <github markdown page to edit>"
+if [[ $# -ne 2 ]]; then
+  echo "Bruk: report.sh <{organisasjon}.github.io/{prosjekt}> <github markdown page to edit>"
   exit 1;
 fi
 
