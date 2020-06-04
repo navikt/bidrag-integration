@@ -6,6 +6,7 @@ set -x
 # Følgende forutsetninger for dette skriptet
 # det forventes at endelig resultat som legges på markdown-fil som input blir fila <input>/index.md
 # det forventes også markdown-fil som er input ligger på rotkatalogen til prosjektet
+# skriptet håndterer bare github pages som ligger i en sub-folder til rotkatalogen i prosjektet
 #
 # Følgende skjer i dette skriptet:
 # 1) setter input (full filsti til markdown-fil, samt antall passerte og feilede teststeg
