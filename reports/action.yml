@@ -1,16 +1,12 @@
 name: Cucumber Reports
-description: Links cucumber reports to copy of README.md (index.md) in docs folder (folder for github pages)
+description: Links cucumber reports to given path for a github page (index.md) in docs folder (folder for github pages)
 inputs:
   pages_address:
-    description: the github pages address for this project
+    description: https://<organisasjon>.github.io/<prosjekt> (web adresse til github pages for organisasjon/prosjekt
     required: true
-  project_where_to_move:
-    description: the name the project where to move the generated html (expects to find a README.md at this root folder).
+  github_page_path:
+    description: full filsti til markdown-fil som skal ha linker til utførte cucumber rapporter
     required: true
-  front_page:
-    description: name of file to be used as front page for the gh-pages, defaults to README.md
-    required: true
-    default: README.md
 runs:
   using: node12
   main: dist/index.js

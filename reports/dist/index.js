@@ -1501,12 +1501,11 @@ const exec = __webpack_require__(960);
 async function run() {
   try {
     const pagesAddress = core.getInput('pages_address');
-    const projectWhereToMove = core.getInput('project_where_to_move');
-    const frontPage = core.getInput('front_page');
+    const githubPagePath = core.getInput('github_page_path');
 
-    // Execute tag bash script
+    // Execute bash script
     await exec.exec(
-        `bash ${__dirname}/../report.sh "${pagesAddress}" "${projectWhereToMove}" "${frontPage}"`
+        `bash ${__dirname}/../report.sh "${pagesAddress}" "${githubPagePath}"`
     );
 
   } catch (error) {

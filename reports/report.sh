@@ -4,35 +4,33 @@ set -e
 ############################################
 #
 # Følgende forutsetninger for dette skriptet
-# - github prosjektets "front-page" beginner seg som "template" fil i rot-mappa til prosjektet
-# - github pages befinner seg under mappa docs
-# - sist genererte rapport blir lagt under mappe docs/latest
-# - eldre genererte rapporter blir lagt under mappa docs/generated/<date or timestamp>
+# - filsti til fil smm endres under er rot katalogen til "github pages" (eks: fila docs/index.md for master branch i bidrag-dev)
+# - alle automatisk genererte rapporter som skal linkes ligger under mappa "generated" som finnes direkte under rotkatalogen til " github pages"
 #
 # Følgende skjer i dette skriptet:
-# 1) setter input (addresse til github pages for prosjektet, navnet til prosjektet og prosjektets forside)
-# 2) leser prosjektets README.md og lagrer den teksten under docs/index.md
-# 3) legger siste genererte integrasjonsrapport inn under docs/latest
-# 4) legger til linker for alle genererte rapporter under docs/inndex.md som peker til docs/generated/<dato-tid>
+# 1) feiler hvis det ikke er forventet antall parametre (2 stk)
+# 2) setter input (addresse til "github pages" for prosjektet og full filsti under rotkatalgen til "github markdown page" som skal endres)
+#    - eks: <https://navikt.github.io/bidrag-dev> og </.../docs/index.md>
+# 3) lager full sti til github pages ved å fjerne alt fra og med siste slash (/) i "github markdown page", eks på resultat: /.../docs
+# 4) går inn i katalogen hvor alle genererte integrasjonstester befinner seg, eks: /.../docs/generated
+# 5) legger til linker for alle genererte rapporter til fila som skal endres
+#    - eks: /.../docs/index.md får link per generete rapport i /.../docs/generated/<dato-tid>
 #
 ############################################
 
-if [[ $# -ne 3 ]]; then
-  echo "Bruk: report.sh <organisasjon>.github.io/<prosjekt> <project where to move> <project front page>"
+if [[ $# -ne 2 ]]; then
+  echo "Bruk: report.sh <{organisasjon}.github.io/{prosjekt}> <github markdown page to edit>"
   exit 1;
 fi
 
 INPUT_PAGES_ADDRESS=$1
-INPUT_PROJECT_WHERE_TO_MOVE=$2
-INPUT_FRONT_PAGE=$3
+INPUT_PATH_TO_GITHUB_PAGE=$2
+FULL_PATH_TO_FOLDER_FOR_GITHUB_PAGES=${INPUT_PATH_TO_GITHUB_PAGE%/*} # fjerner alt etter siste slash (/) i filstien
 
-FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/$INPUT_FRONT_PAGE" | sed "s;/$INPUT_FRONT_PAGE;;")" # remove front page from string
-
-cat "$FULL_PATH_TO_ROOT_PROJECT/$INPUT_FRONT_PAGE" > "$FULL_PATH_TO_ROOT_PROJECT/docs/index.md"
-cd "$FULL_PATH_TO_ROOT_PROJECT/docs/generated" || exit 1;
+cd "$FULL_PATH_TO_FOLDER_FOR_GITHUB_PAGES/generated" || exit 1;
 
 for folder in $(ls -d -r */); do
   echo "lager link til $folder..."
   FOLDER_NAME=$(echo "$folder" | sed 's;/;;')
-  echo "Tests at [$FOLDER_NAME]($INPUT_PAGES_ADDRESS/generated/$folder) <br>" >> "$FULL_PATH_TO_ROOT_PROJECT/docs/index.md"
+  echo "Tests at [$FOLDER_NAME]($INPUT_PAGES_ADDRESS/generated/$folder) <br>" >> "$INPUT_PATH_TO_GITHUB_PAGE"
 done
