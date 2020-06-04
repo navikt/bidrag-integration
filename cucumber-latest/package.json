@@ -1,5 +1,5 @@
 {
-  "name": "it-reports-latest",
+  "name": "cucumber-latest",
   "version": "1.0.0",
   "dependencies": {
     "@actions/core": "^1.2.0",
