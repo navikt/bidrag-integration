@@ -8,14 +8,17 @@ set -x
 # - input til skriptet inneholder json path til status for hvert steg til alle cucumber testene
 #
 # Følgende skjer i dette skriptet:
-# 1) setter input (relativ filsti til json fil og json path til hvert stegs status)
-# 2) finner full sti til json fil
+# 1) går til RUNNER_WORKSPACE
+# 2) setter input (relativ filsti til json fil og json path til hvert stegs status)
+# 3) finner full sti til json fil
 #    - hvis sti ikke finnes, sluttes scriptet med feil
-# 2) teller antall steg som er ok
-# 3) teller antall steg som feilet
-# 4) setter output basert på antall som er funnet
+# 4) teller antall steg som er ok
+# 5) teller antall steg som feilet
+# 6) setter output basert på antall som er funnet
 #
 ############################################
+
+cd "$RUNNER_WORKSPACE" || exit 1 # cd til RUNNER_WORKSPACE eller hard exit
 
 if [[ $# -ne 2 ]]; then
   echo "Bruk: latest.sh <relativ/sti/til/json> <path.steg[].status>"
