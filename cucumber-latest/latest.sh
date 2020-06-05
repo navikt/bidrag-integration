@@ -8,8 +8,9 @@ set -x
 # - input til skriptet inneholder json path til status for hvert steg til alle cucumber testene
 #
 # Følgende skjer i dette skriptet:
-# 1) setter input (full filsti til json fil og json path til hvert stegs status)
-# 2) finner fullstendig sti til json fil
+# 1) setter input (relativ filsti til json fil og json path til hvert stegs status)
+# 2) finner full sti til json fil
+#    - hvis sti ikke finnes, sluttes scriptet med feil
 # 2) teller antall steg som er ok
 # 3) teller antall steg som feilet
 # 4) setter output basert på antall som er funnet
@@ -23,13 +24,20 @@ fi
 
 INPUT_FILE_PATH=$1
 INPUT_JSON_PATH=$2
-FULL_PATH_TO_JSON="$PWD/$(find . -type f | grep "$INPUT_FILE_PATH")"
+FILE_PATH_RELEATIVE_TO_PWD=$(find . -type f | grep "$INPUT_FILE_PATH")
+
+if [ "$FILE_PATH_RELEATIVE_TO_PWD" -eq "" ]; then
+  echo ::error:: "could not find relative file path: $INPUT_INPUT_FILE_PATH"
+  exit 1;
+fi
+
+FULL_PATH_TO_JSON=$( echo "$PWD/$FILE_PATH_RELEATIVE_TO_PWD" | sed 's;/./;/;' ) # erstatter /./ med /
 
 echo "Filsti til json : $FULL_PATH_TO_JSON"
 echo "Json path til jq: $INPUT_JSON_PATH"
 
-NUMBER_PASSED=$(jq "$INPUT_JSON_PATH" "$FULL_PATH_TO_JSON" | grep -c passed || true)  # || true for å ikke få exit code > 0
-NUMBER_FAILED=$(jq "$INPUT_JSON_PATH" "$FULL_PATH_TO_JSON" | grep -c failed || true)  # || true for å ikke få exit code > 0
+NUMBER_PASSED=$(jq "$INPUT_JSON_PATH" "$FULL_PATH_TO_JSON" | grep -c passed || true)  # || true for å ikke få exit code > 0 hvis antall er 0
+NUMBER_FAILED=$(jq "$INPUT_JSON_PATH" "$FULL_PATH_TO_JSON" | grep -c failed || true)  # || true for å ikke få exit code > 0 hvis antall er o
 
 echo ::set-output name=steps_passed::"$NUMBER_PASSED"
 echo ::set-output name=steps_failed::"$NUMBER_FAILED"
