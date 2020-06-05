@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -x
 
 ############################################
 #
@@ -17,7 +17,7 @@ set -e
 ############################################
 
 if [[ $# -ne 2 ]]; then
-  echo "Bruk: report.sh <relativ/sti/til/json> <path.steg[].status>"
+  echo "Bruk: latest.sh <relativ/sti/til/json> <path.steg[].status>"
   exit 1;
 fi
 
