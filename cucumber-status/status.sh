@@ -11,9 +11,8 @@ set -e
 # Følgende skjer i dette skriptet:
 # 1) setter input (navn til markdown-fil, antall passerte og feilede teststeg, samt prosjektnavn og mappe til "github pages"
 # 2) går til runner workspace og finner fullstendig sti til markdown-fil og sluttresultat-fil
-# 3) setter status ikon basert på antall feilede tester
-# 4) legger til status på sluttresultat-fil
-# 5) setter full filsti til sluttresultat-fil som output
+# 3) legger til status på sluttresultat-fil
+# 4) setter full filsti til sluttresultat-fil som output
 #
 ############################################
 
@@ -44,12 +43,6 @@ echo "Antall teststeg som er ok : $INPUT_PASSED_STEPS"
 echo "Antall teststeg som feilet: $INPUT_FAILED_STEPS"
 echo "Filsti til markdown side  : $FULL_PATH_TO_MARKDOWN_PAGE"
 echo "Filsti til endret side    : $FULL_PATH_TO_EDITED_PAGE"
-
-STATUS_ICON=":green_circle:"
-
-if [ "$INPUT_FAILED_STEPS" -ne 0 ]; then
-  STATUS_ICON=":red_circle"
-fi
 
 echo "$(cat "$FULL_PATH_TO_MARKDOWN_PAGE")
 
