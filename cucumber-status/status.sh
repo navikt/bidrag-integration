@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -e
 
 ############################################
 #
@@ -57,7 +57,6 @@ echo "$(cat "$FULL_PATH_TO_MARKDOWN_PAGE")
 
 ##### Status for siste kjøring
 <p>
-  Status på jobb: $STATUS_ICON <br>
   Passerte steg : $INPUT_PASSED_STEPS <br>
   Feilede steg  : $INPUT_FAILED_STEPS <br>
 </p>
