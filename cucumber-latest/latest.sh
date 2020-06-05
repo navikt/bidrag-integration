@@ -26,7 +26,7 @@ INPUT_FILE_PATH=$1
 INPUT_JSON_PATH=$2
 FILE_PATH_RELEATIVE_TO_PWD=$(find . -type f | grep "$INPUT_FILE_PATH")
 
-if [ "$FILE_PATH_RELEATIVE_TO_PWD" -eq "" ]; then
+if [ "$FILE_PATH_RELEATIVE_TO_PWD" == "" ]; then
   echo ::error:: "could not find relative file path: $INPUT_INPUT_FILE_PATH"
   exit 1;
 fi
