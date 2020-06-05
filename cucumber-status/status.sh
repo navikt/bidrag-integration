@@ -9,8 +9,8 @@ set -x
 # skriptet håndterer bare github pages som ligger i en sub-folder til rotkatalogen i prosjektet
 #
 # Følgende skjer i dette skriptet:
-# 1) setter input (navn til markdown-fil, antall passerte og feilede teststeg, samt mappe til "github pages"
-# 2) setter fullstendig sti markdown-fil og sluttresultat-fil ved bruk av RUNNER_WORKSPACE
+# 1) setter input (navn til markdown-fil, antall passerte og feilede teststeg, samt prosjektnavn og mappe til "github pages"
+# 2) går til runner workspace og finner fullstendig sti til markdown-fil og sluttresultat-fil
 # 3) setter status ikon basert på antall feilede tester
 # 4) legger til status på sluttresultat-fil
 # 5) setter full filsti til sluttresultat-fil som output
@@ -28,7 +28,10 @@ INPUT_FAILED_STEPS=$3
 INPUT_PROJECT_NAME=$4
 INPUT_GH_PAGES_FOLDER=$5
 
-PROJECT_ROOT="$RUNNER_WORKSPACE/$INPUT_PROJECT_NAME"
+cd "$RUNNER_WORKSPACE" || exit 1
+
+RELATIVE_PATH_TO_MARKDOWN_PAGE=$(find . -type f | grep "$INPUT_PROJECT_NAME/$INPUT_MARKDOWN_PAGE")
+PROJECT_ROOT="$PWD/${RELATIVE_PATH_TO_MARKDOWN_PAGE%/$INPUT_MARKDOWN_PAGE}" # fjerner /<md-fil> fra path
 
 if [[ ! -d "$PROJECT_ROOT" ]]; then
   echo ::error:: "Unable to find project root from RUNNER_WORKSPACE & INPUT_PROJECT_NAME: $RUNNER_WORKSPACE & $INPUT_PROJECT_NAME"
