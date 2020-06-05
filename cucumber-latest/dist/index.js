@@ -1503,9 +1503,9 @@ async function run() {
     const filepath = core.getInput('relative_filepath');
     const jsonPath = core.getInput('json_path');
 
-    // Execute tag bash script
+    // Execute bash script
     await exec.exec(
-        `bash ${__dirname}/../report.sh "${filepath}" "${jsonPath}"`
+        `bash ${__dirname}/../latest.sh "${filepath}" "${jsonPath}"`
     );
 
   } catch (error) {
