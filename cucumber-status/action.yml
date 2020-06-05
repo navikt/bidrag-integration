@@ -12,11 +12,11 @@ inputs:
     required: true
   project_name:
     description: prosjektnavnet som skal ha oppdatert "github_page"
-    required: false
+    required: true
     default: bidrag-dev
   ghp_folder:
     description: mappe til "github pages" i prosjektet
-    required: false
+    required: true
     default: docs
 outputs:
   edited_page:

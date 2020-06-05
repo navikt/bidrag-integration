@@ -1,16 +1,16 @@
 #!/bin/bash
-set -e
+set -x
 
 ############################################
 #
 # Følgende forutsetninger for dette skriptet
-# det forventes at endelig resultat som legges på markdown-fil som input blir fila <input>/index.md
+# det forventes at endelig resultat som legges på markdown-fil som input blir fila <inpdut github pages>/index.md
 # det forventes også markdown-fil som er input ligger på rotkatalogen til prosjektet
 # skriptet håndterer bare github pages som ligger i en sub-folder til rotkatalogen i prosjektet
 #
 # Følgende skjer i dette skriptet:
-# 1) setter input (full filsti til markdown-fil, samt antall passerte og feilede teststeg
-# 2) finner fullstendig sti markdown-fil og sluttresultat-fil
+# 1) setter input (navn til markdown-fil, antall passerte og feilede teststeg, samt mappe til "github pages"
+# 2) setter fullstendig sti markdown-fil og sluttresultat-fil ved bruk av RUNNER_WORKSPACE
 # 3) setter status ikon basert på antall feilede tester
 # 4) legger til status på sluttresultat-fil
 # 5) setter full filsti til sluttresultat-fil som output
@@ -28,10 +28,12 @@ INPUT_FAILED_STEPS=$3
 INPUT_PROJECT_NAME=$4
 INPUT_GH_PAGES_FOLDER=$5
 
-cd ..
+PROJECT_ROOT="$RUNNER_WORKSPACE/$INPUT_PROJECT_NAME"
 
-FIRST_LINE_PATH_OF_PROJECT_NAME=$(find . -type d | grep "$INPUT_PROJECT_NAME" | sed 1q) # first line of directory match
-PROJECT_ROOT=$(echo "$PWD/$FIRST_LINE_PATH_OF_PROJECT_NAME" | sed 's;/./;/;')
+if [[ ! -d "$PROJECT_ROOT" ]]; then
+  echo ::error:: "Unable to find project root from RUNNER_WORKSPACE & INPUT_PROJECT_NAME: $RUNNER_WORKSPACE & $INPUT_PROJECT_NAME"
+fi
+
 FULL_PATH_TO_MARKDOWN_PAGE="$PROJECT_ROOT/$INPUT_MARKDOWN_PAGE"
 FULL_PATH_TO_EDITED_PAGE="$PROJECT_ROOT/$INPUT_GH_PAGES_FOLDER/index.md"
 
@@ -48,7 +50,7 @@ fi
 
 echo "$(cat "$FULL_PATH_TO_MARKDOWN_PAGE")
 
-#### Siste Cucumber rapporter
+#### Siste integrasjonstester
 
 ##### Status for siste kjøring
 <p>
