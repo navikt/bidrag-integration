@@ -44,15 +44,7 @@ echo "Antall teststeg som feilet: $INPUT_FAILED_STEPS"
 echo "Filsti til markdown side  : $FULL_PATH_TO_MARKDOWN_PAGE"
 echo "Filsti til endret side    : $FULL_PATH_TO_EDITED_PAGE"
 
-echo "$(cat "$FULL_PATH_TO_MARKDOWN_PAGE")
-
-#### Siste integrasjonstester
-
-##### Status for siste kjøring
-<p>
-  Passerte steg : $INPUT_PASSED_STEPS <br>
-  Feilede steg  : $INPUT_FAILED_STEPS <br>
-</p>
-" > "$FULL_PATH_TO_EDITED_PAGE"
+# shellcheck disable=SC2002
+cat "$FULL_PATH_TO_MARKDOWN_PAGE" | sed "s/ANTALL_TESTSTEG_FEILET/$INPUT_FAILED_STEPS/" | sed "s/ANTALL_TESTSTEG_OK/$INPUT_PASSED_STEPS/" > "$FULL_PATH_TO_EDITED_PAGE"
 
 echo ::set-output name=edited_page::"$FULL_PATH_TO_EDITED_PAGE"
