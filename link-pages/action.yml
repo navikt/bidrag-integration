@@ -1,0 +1,22 @@
+name: link-pages
+description: lager linker av alle oppgitte siderfor visning på github pages
+inputs:
+  link_pages:
+    description: mappe som inneholder alle filer som skal vises på gh-pages
+    required: true
+  pages_address:
+    description: https://<organisasjon>.github.io/<prosjekt> (web adresse til github pages for organisasjon/prosjekt
+    required: true
+  page_path:
+    description: full filsti til markdown-fil som skal ha linker til utførte cucumber rapporter
+    required: true
+  pattern:
+    description: pattern (*.filtype) som skal brukes for å finne filene som skal linkes
+    required: true
+  remove_char: "#"
+    description: character removed from first line of file which will not be part of the link
+    required: true
+    default: "#"
+runs:
+  using: node12
+  main: dist/index.js
