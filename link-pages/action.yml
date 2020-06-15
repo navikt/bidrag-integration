@@ -10,10 +10,6 @@ inputs:
   pattern:
     description: pattern (*.filtype) som skal brukes for å finne filene som skal linkes
     required: true
-  remove_char: "#"
-    description: character removed from first line of file which will not be part of the link
-    required: true
-    default: "#"
 runs:
   using: node12
   main: dist/index.js

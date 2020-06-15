@@ -17,15 +17,14 @@ set -e
 #
 ############################################
 
-if [[ $# -ne 4 ]]; then
-  echo ::error:: "Bruk: link.sh <folder> <github front page file path> <file pattern to link> <character to remove from first line i file>"
+if [[ $# -ne 3 ]]; then
+  echo ::error:: "Bruk: link.sh <folder> <github front page file path> <file pattern to link>"
   exit 1;
 fi
 
 INPUT_LINK_PAGES=$1
 INPUT_PAGE_PATH=$2
 INPUT_PATTERN=$3
-INPUT_REMOVE_CHAR=$4
 
 if [[ ! -f "$INPUT_PAGE_PATH" ]]; then
   echo ::error:: "File does not exist: $INPUT_PAGE_PATH"
@@ -49,7 +48,8 @@ PAGE_LINKS=""
 
 for page in $INPUT_PATTERN
 do
-  PAGE_LINKS="${PAGE_LINKS}[$(head -n 1 "$page" | sed "s/$INPUT_REMOVE_CHAR//g" | sed 's/^ //')](https://github.com/$GITHUB_REPOSITORY/$INPUT_LINK_PAGES) <br> "
+  # will remove all # from first line in file (and then a space if line starts with space) when building links
+  PAGE_LINKS="${PAGE_LINKS}[$(head -n 1 "$page" | sed 's/#//g' | sed 's/^ //')](https://github.com/$GITHUB_REPOSITORY/$INPUT_LINK_PAGES) <br> "
 done
 
 echo "Linking pages:
