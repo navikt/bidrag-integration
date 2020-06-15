@@ -4,9 +4,6 @@ inputs:
   link_pages:
     description: mappe som inneholder alle filer som skal vises på gh-pages
     required: true
-  pages_address:
-    description: https://<organisasjon>.github.io/<prosjekt> (web adresse til github pages for organisasjon/prosjekt
-    required: true
   page_path:
     description: full filsti til markdown-fil som skal ha linker til utførte cucumber rapporter
     required: true
