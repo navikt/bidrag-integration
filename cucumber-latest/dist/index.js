@@ -1504,9 +1504,7 @@ async function run() {
     const jsonPath = core.getInput('json_path');
 
     // Execute bash script
-    await exec.exec(
-        `bash ${__dirname}/../latest.sh "${filepath}" "${jsonPath}"`
-    );
+    await exec.exec(`bash ${__dirname}/../latest.sh`, [filepath, jsonPath]);
 
   } catch (error) {
     core.setFailed(error.message);

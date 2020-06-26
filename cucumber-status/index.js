@@ -8,14 +8,12 @@ async function run() {
     const failed = core.getInput('failed');
     const proName = core.getInput('project_name');
     const pagesFolder = core.getInput('ghp_folder');
-
-    core.info(
-        `ghPage "${ghPage}", passed "${passed}", failed "${failed}", proName "${proName}", pagesFolder "${pagesFolder}"`
-    );
+    const timestamp = core.getInput('timestamp');
 
     // Execute bash script
     await exec.exec(
-        `bash ${__dirname}/../status.sh "${ghPage}" "${passed}" "${failed}" "${proName}" "${pagesFolder}"`
+        `bash ${__dirname}/../status.sh`,
+        [ghPage, passed, failed, proName, pagesFolder, timestamp]
     );
 
   } catch (error) {

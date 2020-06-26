@@ -20,6 +20,10 @@ jobs:
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:
           artifact_folder: bidrag-gh-pages/cucumber-latest
+      - name: Install cucumber-move
+        uses: navikt/bidrag-node/build-with-ncc@v1
+        with:
+          artifact_folder: bidrag-gh-pages/cucumber-move
       - name: Install cucumber-status
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:
@@ -28,10 +32,6 @@ jobs:
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:
           artifact_folder: bidrag-gh-pages/link-pages
-      - name: Install move
-        uses: navikt/bidrag-node/build-with-ncc@v1
-        with:
-          artifact_folder: bidrag-gh-pages/move
       - name: Install reports
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:

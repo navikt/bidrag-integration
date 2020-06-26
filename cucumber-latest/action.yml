@@ -12,6 +12,8 @@ outputs:
     description: antall feilede tester ihht cucumber.json
   steps_passed:
     description: antall tester som har kjørt ok ihht cucumber.json
+  time_moved:
+    description: tidsstempel fra latest/timestamp
 runs:
   using: node12
   main: dist/index.js
