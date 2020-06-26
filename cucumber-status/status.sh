@@ -9,9 +9,10 @@ set -e
 # skriptet håndterer bare github pages som ligger i en sub-folder til rotkatalogen i prosjektet
 #
 # Følgende skjer i dette skriptet:
-# 1) setter input (navn til markdown-fil, antall passerte og feilede teststeg, samt prosjektnavn og mappe til "github pages"
+# 1) setter input (navn til markdown-fil, antall passerte og feilede teststeg, samt prosjektnavn, mappe til "github pages" og tidsstempel)
 # 2) går til runner workspace og finner fullstendig sti til markdown-fil og sluttresultat-fil
 # 3) legger til status på sluttresultat-fil
+# 3) legger til tidsstempel på sluttresultat-fil
 # 4) setter full filsti til sluttresultat-fil som output
 #
 ############################################
@@ -26,6 +27,7 @@ INPUT_PASSED_STEPS=$2
 INPUT_FAILED_STEPS=$3
 INPUT_PROJECT_NAME=$4
 INPUT_GH_PAGES_FOLDER=$5
+INPUT_TIMESTAMP=$6
 
 cd "$RUNNER_WORKSPACE" || exit 1
 
@@ -41,10 +43,11 @@ FULL_PATH_TO_EDITED_PAGE="$PROJECT_ROOT/$INPUT_GH_PAGES_FOLDER/index.md"
 
 echo "Antall teststeg som er ok : $INPUT_PASSED_STEPS"
 echo "Antall teststeg som feilet: $INPUT_FAILED_STEPS"
+echo "Tdstempel for flytting    : $INPUT_TIMESTAMP"
 echo "Filsti til markdown side  : $FULL_PATH_TO_MARKDOWN_PAGE"
 echo "Filsti til endret side    : $FULL_PATH_TO_EDITED_PAGE"
 
 # shellcheck disable=SC2002
-cat "$FULL_PATH_TO_MARKDOWN_PAGE" | sed "s/ANTALL_TESTSTEG_FEILET/$INPUT_FAILED_STEPS/" | sed "s/ANTALL_TESTSTEG_OK/$INPUT_PASSED_STEPS/" > "$FULL_PATH_TO_EDITED_PAGE"
+cat "$FULL_PATH_TO_MARKDOWN_PAGE" | sed "s/ANTALL_TESTSTEG_FEILET/$INPUT_FAILED_STEPS/" | sed "s/ANTALL_TESTSTEG_OK/$INPUT_PASSED_STEPS/" | sed "s/TIMESTAMP/$INPUT_TIMESTAMP"  > "$FULL_PATH_TO_EDITED_PAGE"
 
 echo ::set-output name=edited_page::"$FULL_PATH_TO_EDITED_PAGE"

@@ -4,13 +4,13 @@ inputs:
   folder_move_from:
     description: the name of the folder where the html is generated and should be moved/copied from
     required: true
-  project_where_to_move:
-    description: the name the project where to move the generated html (expects to find a README.md at this root folder).
-    required: true
   front_page:
     description: name of file to be used as front page for the gh-pages, defaults to README.md
     required: true
     default: README.md
+  latest_cucumber_json:
+    description: the name of the json file for the original cucumber report to be moved to docs/latest/
+    required: true
 runs:
   using: node12
   main: dist/index.js

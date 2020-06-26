@@ -18,6 +18,9 @@ inputs:
     description: mappe til "github pages" i prosjektet
     required: true
     default: docs
+  timestamp:
+    description: navn på fil som inneholder tidsstempelet for når filene ble flyttet til "github pages"
+    required: true
 outputs:
   edited_page:
     description: full filsti til fil som er basert på markdown-side som input og er oppdatert med status
