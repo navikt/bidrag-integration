@@ -17,8 +17,8 @@ set -e
 #
 ############################################
 
-if [[ $# -ne 5 ]]; then
-  echo "Bruk: status.sh <sidefil i markdown> <antall ok teststeg> <antall feilede teststeg> <navn på prosjekt> <mappe til github pages>"
+if [[ $# -ne 6 ]]; then
+  echo "Bruk: status.sh <sidefil i markdown> <antall ok teststeg> <antall feilede teststeg> <navn på prosjekt> <mappe til github pages> <timestamp>"
   exit 1;
 fi
 
