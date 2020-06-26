@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -x
 
 ############################################
 #
@@ -48,6 +48,6 @@ echo "Filsti til markdown side  : $FULL_PATH_TO_MARKDOWN_PAGE"
 echo "Filsti til endret side    : $FULL_PATH_TO_EDITED_PAGE"
 
 # shellcheck disable=SC2002
-cat "$FULL_PATH_TO_MARKDOWN_PAGE" | sed "s/ANTALL_TESTSTEG_FEILET/$INPUT_FAILED_STEPS/" | sed "s/ANTALL_TESTSTEG_OK/$INPUT_PASSED_STEPS/" | sed "s/TIMESTAMP/$INPUT_TIMESTAMP"  > "$FULL_PATH_TO_EDITED_PAGE"
+cat "$FULL_PATH_TO_MARKDOWN_PAGE" | sed "s/ANTALL_TESTSTEG_FEILET/$INPUT_FAILED_STEPS/" | sed "s/ANTALL_TESTSTEG_OK/$INPUT_PASSED_STEPS/" | sed "s/TIMESTAMP/$INPUT_TIMESTAMP/"  > "$FULL_PATH_TO_EDITED_PAGE"
 
 echo ::set-output name=edited_page::"$FULL_PATH_TO_EDITED_PAGE"
