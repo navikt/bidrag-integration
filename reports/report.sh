@@ -5,7 +5,7 @@ set -e
 #
 # Følgende forutsetninger for dette skriptet
 # - filsti til fil smm endres under er rot katalogen til "github pages" (eks: fila docs/index.md for master branch i bidrag-dev)
-# - alle automatisk genererte rapporter som skal linkes ligger under mappa "generated" som finnes direkte under rotkatalogen til " github pages"
+# - alle automatisk genererte rapporter som skal linkes ligger under mappa "generated" som finnes direkte under rotkatalogen til "github pages"
 #
 # Følgende skjer i dette skriptet:
 # 1) feiler hvis det ikke er forventet antall parametre (2 stk)
