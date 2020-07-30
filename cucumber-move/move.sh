@@ -6,9 +6,10 @@ set -e
 # Følgende forutsetninger for dette skriptet
 # - github prosjektets "front-page" beginner seg som "template" fil i rot-mappa til prosjektet
 # - github pages befinner seg under mappa docs
-# - sist genererte cucumber json lagges under mappe docs/latest/
-# - sist genererte html rapport (m/undermapper) lagges under mappe docs/latest
-# - alle genererte html rapporter ligger under mappa docs/generated/<date or timestamp>
+# - cucumber.json flyttes til mappe docs/latest/
+# - sist genererte cucumber json flyttes under mappe docs/latest/
+# - sist genererte html rapport (m/undermapper) flyttesr mappe docs/latest
+# - alle genererte html rapporter kopieres til mappa docs/generated/<date or timestamp>
 #
 # Følgende skjer i dette skriptet:
 # 1) setter input
@@ -36,7 +37,7 @@ cd ..
 
 FIRST_LINE_PATH_TO_MOVE_FOLDER=$(find . -type d | grep "$INPUT_FOLDER_MOVE_FROM" | sed 1q)                         # first line of directory match
 FULL_PATH_TO_MOVE_FOLDER="$PWD/$(echo "$FIRST_LINE_PATH_TO_MOVE_FOLDER" | sed 's,^ *,,; s, *$,,')"                 # concat with PWD and remove leading and trailing whitespaces from first line
-FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/$INPUT_FRONT_PAGE" | sed "s;/$INPUT_FRONT_PAGE;;")"       # remove front page from string
+FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/$INPUT_FRONT_PAGE" | sed "s;/$INPUT_FRONT_PAGE;;")" # remove front page from string
 FULL_PATH_TO_DOCS_LATEST="$(echo "$FULL_PATH_TO_ROOT_PROJECT/docs/latest" | sed 's;//;/;')"                        # replace // with / in path
 FULL_PATH_TO_DOCS_GENERATED="$(echo "$FULL_PATH_TO_ROOT_PROJECT/docs/generated" | sed 's;//;/;')"                  # replace // with / in path
 FULL_PATH_TO_GENERATED_CUCUMBER_JSON="$PWD/$(find . -type f | grep "$INPUT_LATEST_CUCUMBER_JSON" | sed 's;//;/;')" # replace // with / in path
