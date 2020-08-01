@@ -16,26 +16,30 @@ jobs:
       - run: npm i -g @zeit/ncc
       - name: Debug workspace
         run: env
+      - name: Install cucumber-backend
+        uses: navikt/bidrag-node/build-with-ncc@v1
+        with:
+          artifact_folder: bidrag-integration/cucumber-backend
       - name: Install cucumber-latest
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:
-          artifact_folder: bidrag-gh-pages/cucumber-latest
+          artifact_folder: bidrag-integration/cucumber-latest
       - name: Install cucumber-move
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:
-          artifact_folder: bidrag-gh-pages/cucumber-move
+          artifact_folder: bidrag-integration/cucumber-move
       - name: Install cucumber-status
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:
-          artifact_folder: bidrag-gh-pages/cucumber-status
+          artifact_folder: bidrag-integration/cucumber-status
       - name: Install link-pages
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:
-          artifact_folder: bidrag-gh-pages/link-pages
+          artifact_folder: bidrag-integration/link-pages
       - name: Install reports
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:
-          artifact_folder: bidrag-gh-pages/reports
+          artifact_folder: bidrag-integration/reports
       - name: Generate timestamp
         id: now
         run: echo ::set-output name=timestamp::$(date +"%Y-%m-%d:%T")
