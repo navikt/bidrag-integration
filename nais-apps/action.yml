@@ -1,5 +1,5 @@
 name: supported nais applications
-description: gets <application>/nais/q[0|1].json files from github
+description: gets <application>/nais/q[0|1].json files from github - add GITHUB_TOKEN to environment vatiables, and GITHUB_ACTOR will be used when cloning
 inputs:
   nais-apps:
     description: The nais applications (github repositories) to fetch from github

@@ -6,7 +6,7 @@ function usage() {
   echo Navngi apps som json: apps.sh '{"apps":["github project","another github project","..."]}'
 }
 
-# funksjon som henter ut et github prosjekt for en applikasjon (github prosjekt) med uten passord
+# funksjon som henter ut et github prosjekt for en applikasjon (github prosjekt) uten brukernavn/passord
 function checkoutNaisWithoutCredentials() {
   NAIS_APP=$(echo "$1" | sed 's/"//g')
 
