@@ -36,6 +36,10 @@ jobs:
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:
           artifact_folder: bidrag-integration/link-pages
+      - name: Install nais-apps
+        uses: navikt/bidrag-node/build-with-ncc@v1
+        with:
+          artifact_folder: bidrag-gh-pages/nais-apps
       - name: Install reports
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:

@@ -1,0 +1,12 @@
+name: supported nais applications
+description: gets <application>/nais/q[0|1].json files from github
+inputs:
+  nais-apps:
+    description: The nais applications (github repositories) to fetch from github
+    required: true
+outputs:
+  nais-apps-folder:
+    description: File path to the folder containing this application information
+runs:
+  using: node12
+  main: dist/index.js
