@@ -1543,7 +1543,7 @@ async function run() {
     const naisApps = core.getInput('nais-apps');
 
     // Execute bash script
-    await exec.exec(`bash ${__dirname}/../apps.sh`, naisApps);
+    await exec.exec(`bash ${__dirname}/../apps.sh`, [naisApps]);
 
   } catch (error) {
     core.setFailed(error.message);
