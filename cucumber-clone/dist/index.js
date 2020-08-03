@@ -1540,10 +1540,8 @@ const exec = __webpack_require__(960);
 
 async function run() {
   try {
-    const naisGithubProject = core.getInput('nais_github_project');
-
     // Execute cucumber-clone bash script
-    await exec.exec(`${__dirname}/../cucumber-clone.sh`, [naisGithubProject]);
+    await exec.exec(`${__dirname}/../cucumber-clone.sh`);
   } catch (error) {
     core.setFailed(error.message);
   }
