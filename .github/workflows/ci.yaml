@@ -20,6 +20,10 @@ jobs:
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:
           artifact_folder: bidrag-integration/cucumber-backend
+      - name: Install cucumber-clone
+        uses: navikt/bidrag-node/build-with-ncc@v1
+        with:
+          artifact_folder: bidrag-integration/cucumber-clone
       - name: Install cucumber-latest
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:

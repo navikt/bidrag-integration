@@ -14,10 +14,8 @@ set -e
 #    - INPUT_DO_NOT_FAIL == true
 #      kjører mvn INPUT_MAVEN_COMMAND -e på bidrag-cucumber-backend i et docker image med all konfigurasjon for
 #      integeasjonstesting uten å feile ved testfeil
-# 6) legger til variabel for nais konfigurasjon med maven (-DPROJECT_NAIS_FOLDER/usr/src/mymaven/simple) når testing
-#    skal bruke nais konfigurasjon
-# 7) Utfører mvn kommando med parametre som gitt
-# 8) Når valgfri maven kommando er oppgitt, så kjøres også denne med docker
+# 6) Utfører mvn kommando med parametre som gitt
+# 7) Når valgfri maven kommando er oppgitt, så kjøres også denne med docker
 #
 ############################################
 
@@ -25,10 +23,8 @@ INPUT_CUCUMBER_TAG=$1
 INPUT_DO_NOT_FAIL=$2
 INPUT_MAVEN_COMMAND=$3
 INPUT_MAVEN_IMAGE=$4
-INPUT_RUN_FROM_WORKSPACE=$5
-INPUT_TEST_USER=$6
-INPUT_USE_NAIS_CONFIGURATION=$7
-INPUT_USERNAME=$8
+INPUT_TEST_USER=$5
+INPUT_USERNAME=$6
 
 if [[ -z "$USER_AUTHENTICATION" ]]; then
   >&2 echo ::error:: "No USER_AUTHENTICATION (password) for a nav user is configured"
@@ -42,9 +38,7 @@ if [[ -z "$TEST_USER_AUTHENTICATION" ]]; then
   exit 1;
 fi
 
-if [ "$INPUT_RUN_FROM_WORKSPACE" == "true" ]; then
-  cd "$RUNNER_WORKSPACE" || exit 1;
-fi
+cd "$RUNNER_WORKSPACE" || exit 1;
 
 if [[ -d bidrag-cucumber-backend ]]; then
   echo goto bidrag-cucumber-backend
@@ -76,14 +70,7 @@ else
   echo will fail if integrationstests have errors
 fi
 
-PROJECT_NAIS_FOLDER=""
-
-if [[ -z "$INPUT_USE_NAIS_CONFIGURATION" ]]; then
-  echo will find configuration from fasit...
-else
-  PROJECT_NAIS_FOLDER="-DPROJECT_NAIS_FOLDER=/usr/src/mymaven/simple"
-fi
-
+PROJECT_NAIS_FOLDER="-DPROJECT_NAIS_FOLDER=/usr/src/mymaven/simple"
 RUN_ARGUMENT="--rm -v $PWD:/usr/src/mymaven -v $HOME/.m2:/root/.m2 -w /usr/src/mymaven $INPUT_MAVEN_IMAGE mvn"
 MAVEN_ARGUMENTS="-e -DENVIRONMENT=$ENVIRONMENT -DUSERNAME=$INPUT_USERNAME -DTEST_USER=$INPUT_TEST_USER $PROJECT_NAIS_FOLDER $CUCUMBER_FILTER $SKIP_MAVEN_FAILURES"
 

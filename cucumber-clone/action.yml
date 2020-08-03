@@ -1,0 +1,9 @@
+name: Clone cucumber with nais
+description: Clones bidrag-cucumber-backend and will also clone a github project if needed in order to be able to read the nais configuration
+runs:
+  using: node12
+  main: dist/index.js
+inputs:
+  nais_github_project:
+    description: The name of the github project if the project needs nais configuration other than from fasit
+    required: false
