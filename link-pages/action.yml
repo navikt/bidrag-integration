@@ -5,7 +5,7 @@ inputs:
     description: mappe som inneholder alle filer som skal vises på gh-pages
     required: true
   page_path:
-    description: full filsti til markdown-fil som skal ha linker til utførte cucumber rapporter
+    description: full filsti til markdown-fil som skal ha linker til andre filer
     required: true
   pattern:
     description: pattern (*.filtype) som skal brukes for å finne filene som skal linkes
