@@ -22,7 +22,7 @@ BRANCH="${GITHUB_REF#refs/heads/}"
 if [[ "$GITHUB_REF" != "refs/heads/master" ]]; then
   FEATURE_BRANCH=$BRANCH
   # shellcheck disable=SC2046
-  IS_API_CHANGE="$(git ls-remote --heads ""$(echo "https://github.com/navikt/$INPUT_CUCUMBER_PROJECT $FEATURE_BRANCH" | sed "s/'//g") | wc -l)"
+  IS_API_CHANGE="$(git ls-remote "--heads $(echo "https://github.com/navikt/$INPUT_CUCUMBER_PROJECT $FEATURE_BRANCH" | sed "s/'//g")" | wc -l)"
 
   if [[ $IS_API_CHANGE -eq 1 ]]; then
     echo "Using feature branch: $FEATURE_BRANCH"
@@ -37,7 +37,7 @@ else
   git clone "--depth 1 https://github.com/navikt/$INPUT_CUCUMBER_PROJECT"
 fi
 
-# gå til "INPUT_CUCUMBER_PROJECT" slik at json filene blir synlige i docker container når integrasjonstestene gjøres
+# gå til "INPUT_CUCUMBER_PROJECT" slik at json filene blir synlige i docker container når integrasjonstestene kjøres
 cd "INPUT_CUCUMBER_PROJECT" || exit 1;
 
 if [[ "$BRANCH" == "master" ]]; then
@@ -46,11 +46,8 @@ else
   CLONE_BRANCH="--branch=$BRANCH"
 fi
 
-SIMPLE="$PWD/simple"
-
-sudo rm -rf "$SIMPLE"
-mkdir "$SIMPLE"
-cd "$SIMPLE" || exit 1;
+mkdir simple
+cd simple || exit 1;
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
   git clone "--depth 1 $CLONE_BRANCH https://github.com/$GITHUB_REPOSITORY"
