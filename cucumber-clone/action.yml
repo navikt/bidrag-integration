@@ -1,0 +1,10 @@
+name: Clone cucumber and nais-app
+description: Clones a github project end and will also clone a github project (nais application) to be able to read the configuration
+runs:
+  using: node12
+  main: dist/index.js
+inputs:
+  cucumber_project:
+    description: "The name of the github cucumber-project, ie: https://github.com/navikt/<cucumber_project>"
+    required: true
+    default: bidrag-cucumber-backend
