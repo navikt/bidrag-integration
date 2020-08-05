@@ -1539,9 +1539,11 @@ const core = __webpack_require__(52);
 const exec = __webpack_require__(960);
 
 async function run() {
+  const cucumberProject = core.getInput('cucumber_project')
+
   try {
     // Execute cucumber-clone bash script
-    await exec.exec(`${__dirname}/../cucumber-clone.sh`);
+    await exec.exec(`${__dirname}/../cucumber-clone.sh`, [cucumberProject]);
   } catch (error) {
     core.setFailed(error.message);
   }
