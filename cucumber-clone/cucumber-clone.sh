@@ -27,14 +27,14 @@ if [[ "$GITHUB_REF" != "refs/heads/master" ]]; then
   if [[ $IS_API_CHANGE -eq 1 ]]; then
     echo "Using feature branch: $FEATURE_BRANCH"
     # shellcheck disable=SC2086
-    git clone "--depth 1 --branch=$FEATURE_BRANCH https://github.com/navikt/$INPUT_CUCUMBER_PROJECT"
+    git clone "$("--depth 1 --branch=$FEATURE_BRANCH https://github.com/navikt/$INPUT_CUCUMBER_PROJECT" | sed "s/'//g")"
   else
     echo "Using /refs/heads/master"
-    git clone "--depth 1 https://github.com/navikt/$INPUT_CUCUMBER_PROJECT"
+    git clone "$("--depth 1 https://github.com/navikt/$INPUT_CUCUMBER_PROJECT" | sed "s/'//g")"
   fi
 else
   echo "Using /refs/heads/master"
-  git clone "--depth 1 https://github.com/navikt/$INPUT_CUCUMBER_PROJECT"
+  git clone "$(echo "--depth 1 https://github.com/navikt/$INPUT_CUCUMBER_PROJECT" | sed "s/'//g")"
 fi
 
 # gå til "INPUT_CUCUMBER_PROJECT" slik at json filene blir synlige i docker container når integrasjonstestene kjøres
