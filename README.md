@@ -3,7 +3,7 @@
 
 ## Actions dealing with integrations
 
-- cucumber-backend: run bidrag-cucumber-backend (integration tests) with maven
+- cucumber-clone: clone a github cucumber project and add folder simple with a simple clone of the project which is beeing tested
 - cucumber-latest: hent antall ok/feilede teststeg fra cucumber.json
 - cucumber-move: flytter html for siste cumber-rapport til docs mappa for visining på github pages
 - cucumber-status: skriver antall ok/felede testeg til github pages
