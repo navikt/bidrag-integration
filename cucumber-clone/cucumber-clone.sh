@@ -50,6 +50,8 @@ fi
 
 mkdir simple
 cd simple || exit 1;
+env | grep -i journalpost
+env | grep -i github
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
   # shellcheck disable=SC2086
