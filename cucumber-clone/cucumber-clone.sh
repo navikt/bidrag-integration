@@ -8,7 +8,7 @@ set -e
 # 2a) ved feature branch
 #    - clone cucumber-prosjektet, branch=feature (hvis den finnes), hvis ikke brukes master
 # 2b) ved master branch
-#    - clone cucumber-prosjektet, master branch
+#    - clone cucumber-prosjektet, master branchpus
 # 3) sjekker om vi har all konfigurasjon som trengs til integrasjonstestingen (passord for nav-bruker og testbrukere)
 # 4) klon GITHUB_REPOSITORY i mappa "simple" for at cucumber skal lese nais-konfigurasjon
 #
@@ -27,7 +27,7 @@ if [[ "$GITHUB_REF" != "refs/heads/master" ]]; then
   if [[ $IS_API_CHANGE -eq 1 ]]; then
     echo "Using feature branch: $FEATURE_BRANCH"
     # shellcheck disable=SC2086
-    git clone --depth 1 --branch=$FEATURE_BRANCH https://github.com/$INPUT_CUCUMBER_PROJECT
+    git clone --depth 1 --branch=$FEATURE_BRANCH https://github.com/navikt/$INPUT_CUCUMBER_PROJECT
   else
     echo "Using /refs/heads/master"
     # shellcheck disable=SC2086
