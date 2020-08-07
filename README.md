@@ -14,5 +14,7 @@
 
 versjon | endringstype | beskrivelse
 ---|---|---
+v1.0.2 | endret | `cucumber-clone` default valued parameter to action: folder_nais_apps
+v1.0.1 | endret | `cucumber-clone` added organization when cloning feature branch
 v1 | opprettet | ny action: `cucumber-clone` som kloner et cucumber repository samt github repoet som testes
 v1 | endret | portet fra https://github.com/navikt/bidrag-gh-pages
