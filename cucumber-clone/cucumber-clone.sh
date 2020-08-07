@@ -15,11 +15,12 @@ set -e
 ############################################
 
 INPUT_CUCUMBER_PROJECT=$1
+INPUT_FOLDER_NAIS_APPS=$2
 
 sudo rm -rf "$INPUT_CUCUMBER_PROJECT"
 BRANCH="${GITHUB_REF#refs/heads/}"
 
-if [[ "$GITHUB_REF" != "refs/heads/master" ]]; then
+if [[ "$BRANCH" != "master" ]]; then
   FEATURE_BRANCH=$BRANCH
   # shellcheck disable=SC2046
   IS_API_CHANGE=$(git ls-remote --heads $(echo "https://github.com/navikt/$INPUT_CUCUMBER_PROJECT $FEATURE_BRANCH" | sed "s/'//g") | wc -l)
@@ -48,8 +49,8 @@ else
   CLONE_BRANCH="--branch=$BRANCH"
 fi
 
-mkdir simple
-cd simple || exit 1;
+mkdir "$INPUT_FOLDER_NAIS_APPS"
+cd "$INPUT_FOLDER_NAIS_APPS" || exit 1;
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
   # shellcheck disable=SC2086
