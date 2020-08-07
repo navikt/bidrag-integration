@@ -17,6 +17,7 @@ set -e
 INPUT_CUCUMBER_PROJECT=$1
 INPUT_FOLDER_NAIS_APPS=$2
 
+cd "$RUNNER_WORKSPACE" || exit 1 # cd til RUNNER_WORKSPACE eller hard exit
 sudo rm -rf "$INPUT_CUCUMBER_PROJECT"
 BRANCH="${GITHUB_REF#refs/heads/}"
 
@@ -60,4 +61,5 @@ else
   git clone --depth 1 $CLONE_BRANCH https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY
 fi
 
+cd "$RUNNER_WORKSPACE" || echo "could not enter ws: $RUNNER_WORKSPACE"
 find . -type f -name "q*.json"
