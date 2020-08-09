@@ -3,7 +3,7 @@ const exec = require("@actions/exec");
 
 async function run() {
   try {
-    const ghPage = core.getInput('github_page');
+    const ghPage = core.getInput('path_github_page');
     const passed = core.getInput('passed');
     const failed = core.getInput('failed');
     const proName = core.getInput('project_name');

@@ -1,28 +1,31 @@
 name: status for cucumber kjøring
 description: enkel markdown for en status på en cucumber kjøring
 inputs:
-  github_page:
-    description: filnavn til github siden skrevet i markdown  som skal oppdateres med status (kan være en relativ sti)
+  failed:
+    description: antall feilede teststeg
     required: true
+  ghp_folder:
+    description: mappe til "github pages" i prosjektet
+    required: true
+    default: docs
   passed:
     description: antall teststeg som er ok
     required: true
-  failed:
-    description: antall feilede teststeg
+  github_page:
+    description: filnavn til github siden skrevet i markdown og som skal oppdateres med status (kan være en relativ sti)
+    required: true
+  relative_path_report:
+    description: relativt filnavn til generert cucumber rapport
     required: true
   project_name:
     description: prosjektnavnet som skal ha oppdatert "github_page"
     required: true
     default: bidrag-dev
-  ghp_folder:
-    description: mappe til "github pages" i prosjektet
-    required: true
-    default: docs
   timestamp:
     description: navn på fil som inneholder tidsstempelet for når filene ble flyttet til "github pages"
     required: true
 outputs:
-  edited_page:
+  path_edited_page:
     description: full filsti til fil som er basert på markdown-side som input og er oppdatert med status
 runs:
   using: node12

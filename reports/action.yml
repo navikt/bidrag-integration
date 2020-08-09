@@ -4,7 +4,7 @@ inputs:
   pages_address:
     description: https://<organisasjon>.github.io/<prosjekt> (web adresse til github pages for organisasjon/prosjekt
     required: true
-  github_page_path:
+  path_github_page:
     description: full filsti til markdown-fil som skal ha linker til utførte cucumber rapporter
     required: true
 runs:
