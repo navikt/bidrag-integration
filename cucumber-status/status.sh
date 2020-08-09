@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -x
 
 ############################################
 #
@@ -31,7 +31,7 @@ INPUT_TIMESTAMP=$6
 
 cd "$RUNNER_WORKSPACE" || exit 1
 
-RELATIVE_PATH_TO_MARKDOWN_PAGE=$(find . -type f | grep "$INPUT_PROJECT_NAME/$INPUT_MARKDOWN_PAGE")
+RELATIVE_PATH_TO_MARKDOWN_PAGE=$(find . -type f | grep "$INPUT_PROJECT_NAME/$INPUT_MARKDOWN_PAGE" | head -n 1)
 PROJECT_ROOT="$PWD/${RELATIVE_PATH_TO_MARKDOWN_PAGE%/$INPUT_MARKDOWN_PAGE}" # fjerner /<md-fil> fra path
 
 if [[ ! -d "$PROJECT_ROOT" ]]; then
