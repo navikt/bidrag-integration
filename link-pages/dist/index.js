@@ -1540,8 +1540,8 @@ const exec = __webpack_require__(960);
 
 async function run() {
   try {
-    const linkPages = core.getInput('link_pages');
-    const pagePath = core.getInput('page_path');
+    const linkPages = core.getInput('folder_link_pages');
+    const pagePath = core.getInput('path_page');
     const pattern = core.getInput('pattern');
 
     // Execute bash script
