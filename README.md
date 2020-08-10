@@ -14,6 +14,7 @@
 
 versjon | endringstype | beskrivelse
 ---|---|---
+v2.0.0 | endret | refakturering av script og nye/endde inputs/outputs til/fra actions
 v1.0.2 | endret | `cucumber-clone` default valued parameter to action: folder_nais_apps
 v1.0.1 | endret | `cucumber-clone` added organization when cloning feature branch
 v1 | opprettet | ny action: `cucumber-clone` som kloner et cucumber repository samt github repoet som testes

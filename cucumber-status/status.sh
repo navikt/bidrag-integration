@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -e
 
 ############################################
 #
@@ -32,10 +32,11 @@ INPUT_TIMESTAMP=$6
 cd "$RUNNER_WORKSPACE" || exit 1
 
 RELATIVE_PATH_TO_MARKDOWN_PAGE=$(find . -type f | grep "$INPUT_PROJECT_NAME/$INPUT_MARKDOWN_PAGE" | head -n 1)
-PROJECT_ROOT="$PWD/${RELATIVE_PATH_TO_MARKDOWN_PAGE%/$INPUT_MARKDOWN_PAGE}" # fjerner /<md-fil> fra path
+RELATIVE_PATH_TO_PROJECT_ROOT=$(echo "$RELATIVE_PATH_TO_MARKDOWN_PAGE" | sed 's;./;;' | sed "s;/$INPUT_MARKDOWN_PAGE;;")  # fjerner ./ og /<md-fil> fra path
+PROJECT_ROOT="$PWD/${RELATIVE_PATH_TO_PROJECT_ROOT}"
 
 if [[ ! -d "$PROJECT_ROOT" ]]; then
-  echo ::error:: "Unable to find project root from RUNNER_WORKSPACE & INPUT_PROJECT_NAME: $RUNNER_WORKSPACE & $INPUT_PROJECT_NAME"
+  echo ::error:: "Unable to find project root from RUNNER_WORKSPACE & INPUT_PROJECT_NAME: $RUNNER_WORKSPACE & $INPUT_PROJECT_NAME - project root: $PROJECT_ROOT"
 fi
 
 FULL_PATH_TO_MARKDOWN_PAGE="$PROJECT_ROOT/$INPUT_MARKDOWN_PAGE"
