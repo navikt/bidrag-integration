@@ -1,10 +1,10 @@
 name: link-pages
 description: lager linker av alle oppgitte siderfor visning på github pages
 inputs:
-  link_pages:
+  folder_link_pages:
     description: mappe som inneholder alle filer som skal vises på gh-pages
     required: true
-  page_path:
+  path_page:
     description: full filsti til markdown-fil som skal ha linker til andre filer
     required: true
   pattern:

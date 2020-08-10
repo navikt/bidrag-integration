@@ -22,7 +22,7 @@ if [[ $# -ne 3 ]]; then
   exit 1;
 fi
 
-INPUT_LINK_PAGES=$1
+INPUT_FOLDER_LINK_PAGES=$1
 INPUT_PAGE_PATH=$2
 INPUT_PATTERN=$3
 
@@ -33,13 +33,13 @@ fi
 
 cd "$RUNNER_WORKSPACE" || exit 1
 
-LINK_PAGES_FOLDER=$(find . -d -name "$INPUT_LINK_PAGES")
+LINK_PAGES_FOLDER=$(find . -d -name "$INPUT_FOLDER_LINK_PAGES")
 FOLDER_ROOT="$PWD/$LINK_PAGES_FOLDER"
 
 if [[ -d "$FOLDER_ROOT" ]]; then
   echo "Folder to link files from: $FOLDER_ROOT"
 else
-  echo ::error:: "Unable to find folder ($INPUT_LINK_PAGES) as sub folder in $RUNNER_WORKSPACE"
+  echo ::error:: "Unable to find folder ($INPUT_FOLDER_LINK_PAGES) as sub folder in $RUNNER_WORKSPACE"
   exit 1;
 fi
 

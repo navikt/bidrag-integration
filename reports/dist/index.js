@@ -1501,7 +1501,7 @@ const exec = __webpack_require__(960);
 async function run() {
   try {
     const pagesAddress = core.getInput('pages_address');
-    const githubPagePath = core.getInput('github_page_path');
+    const githubPagePath = core.getInput('path_github_page');
 
     // Execute bash script
     await exec.exec(

@@ -68,7 +68,13 @@ echo "Flytter html fra mappe $FULL_PATH_TO_MOVE_FOLDER til mappe $FULL_PATH_TO_D
 echo "Oppretter også en kopi i $FULL_PATH_TO_GENERATED_FOLDER"
 
 cp -R "$FULL_PATH_TO_MOVE_FOLDER"/* "$FULL_PATH_TO_GENERATED_FOLDER"/.
+cp "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" "$FULL_PATH_TO_GENERATED_FOLDER/."
+
+# shellcheck disable=SC2011
 cd "$FULL_PATH_TO_DOCS_LATEST" && ls | xargs sudo rm -rf
+
 sudo mv "$FULL_PATH_TO_MOVE_FOLDER"/* .
 sudo mv "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" "$FULL_PATH_TO_DOCS_LATEST/."
 date > "$FULL_PATH_TO_DOCS_LATEST/timestamp"
+
+echo ::set-output name=generated_folder::"$GENERATED_FOLDER"
