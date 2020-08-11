@@ -12,8 +12,9 @@
 
 ## Release log
 
-versjon | endringstype | beskrivelse
+versjon | endringstype | beskrivelse
 ---|---|---
+v3.0.0 | endret | `cucumber-move` ingen output, men oppretter bidrag-dev.json med info
 v2.0.0 | endret | refakturering av script og nye/endde inputs/outputs til/fra actions
 v1.0.2 | endret | `cucumber-clone` default valued parameter to action: folder_nais_apps
 v1.0.1 | endret | `cucumber-clone` added organization when cloning feature branch
