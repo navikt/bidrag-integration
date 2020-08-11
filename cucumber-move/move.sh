@@ -19,7 +19,9 @@ set -e
 # 5) sletter gamle genererte html mapper rett under docs/latest mappa
 # 6) flytter (og overskriver gammel) generert html til github pages (docs/latest mappa)
 # 7) flytter generert json fil fra input under github pages (docs/latest/<input-fil>)
-# 8) oppretter ei fil som inneholder tidsstempling for når dette ble gjort i docs/latest/timestamp
+# 8) oppretter bidrag-dev.json som inneholder data for denne operasjonen
+#    - timestamp: tidspunktet for flytting
+#    - generated-folder: mappenavnet til den genererte mappa
 #
 ############################################
 
@@ -75,6 +77,8 @@ cd "$FULL_PATH_TO_DOCS_LATEST" && ls | xargs sudo rm -rf
 
 sudo mv "$FULL_PATH_TO_MOVE_FOLDER"/* .
 sudo mv "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" "$FULL_PATH_TO_DOCS_LATEST/."
-date > "$FULL_PATH_TO_DOCS_LATEST/timestamp"
 
-echo ::set-output name=generated_folder::"$GENERATED_FOLDER"
+TIMESTAMP_JSON="\"timestamp\":\"$( date )\""
+FOLDER_JSON="\"foldername\":\"$GENERATED_FOLDER\""
+
+echo "{$TIMESTAMP_JSON,$FOLDER_JSON}" > "$FULL_PATH_TO_DOCS_LATEST/bidrag-dev.json"
