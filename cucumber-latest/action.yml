@@ -8,6 +8,8 @@ inputs:
     description: json path til statusfeltet til resultatet av hvert steg
     required: true
 outputs:
+  generated_folder:
+    description: the name of the generated folder where the test reports are stored
   steps_failed:
     description: antall feilede tester ihht cucumber.json
   steps_passed:
