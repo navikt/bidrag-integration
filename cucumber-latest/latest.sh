@@ -16,7 +16,7 @@ set -e
 # 4) teller antall steg som er ok
 # 5) teller antall steg som feilet
 # 6) setter output basert på antall som er funnet
-# 7) setter også output basert på timestamp fra bidrag-dev.json fra "latest" mappa
+# 7) setter også output lagret i bidrag-dev.json fra "latest" mappa
 #
 ############################################
 
@@ -44,7 +44,9 @@ echo "Json path til jq: $INPUT_JSON_PATH"
 NUMBER_PASSED=$(jq "$INPUT_JSON_PATH" "$FULL_PATH_TO_JSON" | grep -c passed || true)  # || true for å ikke få exit code > 0 hvis antall er 0
 NUMBER_FAILED=$(jq "$INPUT_JSON_PATH" "$FULL_PATH_TO_JSON" | grep -c failed || true)  # || true for å ikke få exit code > 0 hvis antall er o
 TIMESTAMP=$(echo "$FULL_PATH_TO_JSON" | sed 's/cucumber.json/bidrag-dev.json/' | xargs jq '.timestamp')
+GENERATED_FOLDER=$(echo "$FULL_PATH_TO_JSON" | sed 's/cucumber.json/bidrag-dev.json/' | xargs jq '.foldername' | sed 's/"//g')
 
-echo ::set-output name=steps_passed::"$NUMBER_PASSED"
+echo ::set-output name=generated_folder::"$GENERATED_FOLDER"
 echo ::set-output name=steps_failed::"$NUMBER_FAILED"
+echo ::set-output name=steps_passed::"$NUMBER_PASSED"
 echo ::set-output name=time_moved::"$TIMESTAMP"
