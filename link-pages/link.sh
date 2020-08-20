@@ -49,7 +49,7 @@ PAGE_LINKS=""
 for page in $INPUT_PATTERN
 do
   # will remove all # from first line in file (and then a space if line starts with space) when building links
-  PAGE_LINKS="${PAGE_LINKS}[$(head -n 1 "$page" | sed 's/#//g' | sed 's/^ //')](https://github.com/$GITHUB_REPOSITORY/blob/main/$INPUT_LINK_PAGES/$page) <br> "
+  PAGE_LINKS="${PAGE_LINKS}[$(head -n 1 "$page" | sed 's/#//g' | sed 's/^ //')](https://github.com/$GITHUB_REPOSITORY/blob/main/$INPUT_FOLDER_LINK_PAGES/$page) <br> "
 done
 
 echo "Linking pages:
