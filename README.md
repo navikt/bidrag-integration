@@ -14,6 +14,7 @@
 
 versjon | endringstype | beskrivelse
 ---|---|---
+v3.0.2 | endret | `link-pages` correct shell variable name
 v3.0.1 | endret | `cucumber-latest` output er samme som innhold i bidrag-dev.json
 v3.0.0 | endret | `cucumber-move` ingen output, men oppretter bidrag-dev.json med info
 v2.0.0 | endret | refakturering av script og nye/endde inputs/outputs til/fra actions
