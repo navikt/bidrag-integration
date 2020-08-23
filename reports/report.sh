@@ -49,7 +49,7 @@ for folder in $(find "$PWD" -type d -maxdepth 1 | sort -r | sed "s;$PWD;;" | sed
       echo -n "$folder - "
       else
         echo "$folder"
-        echo "[$COLUMN_A]($INPUT_PAGES_ADDRESS/generated/$COLUMN_A) | [$COLUMN_B]($INPUT_PAGES_ADDRESS/generated/$COLUMN_B) | [$folder]($INPUT_PAGES_ADDRESS/generated/$folder)" >> "$INPUT_PATH_TO_GITHUB_PAGE"
+        echo "[$COLUMN_A]($INPUT_PAGES_ADDRESS/generated/$COLUMN_A) | [$COLUMN_B]($INPUT_PAGES_ADDRESS/generated/$COLUMN_B) | [$folder]($INPUT_PAGES_ADDRESS/generated/$folder) " >> "$INPUT_PATH_TO_GITHUB_PAGE"
         COLUMN_A=""
         COLUMN_B=""
       fi
