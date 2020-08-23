@@ -67,5 +67,5 @@ if [[ -n $COLUMN_A ]]; then
   fi
 fi
 
-echo "$LAST_LINE" >> "$INPUT_PATH_TO_GITHUB_PAGE"
+echo "$LAST_LINE \n" >> "$INPUT_PATH_TO_GITHUB_PAGE"
 echo "finished creating links..."
