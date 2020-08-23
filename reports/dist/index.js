@@ -1505,7 +1505,7 @@ async function run() {
 
     // Execute bash script
     await exec.exec(
-        `bash ${__dirname}/../report.sh "${pagesAddress}" "${githubPagePath}"`
+        `bash ${__dirname}/../report.sh`, [pagesAddress, githubPagePath]
     );
 
   } catch (error) {
