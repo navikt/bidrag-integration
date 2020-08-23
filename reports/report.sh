@@ -19,7 +19,13 @@ set -e
 ############################################
 
 if [[ $# -ne 2 ]]; then
-  echo "Bruk: report.sh <{organisasjon}.github.io/{prosjekt}> <github markdown page to edit>"
+  echo ::error:: "Bruk: report.sh <{organisasjon}.github.io/{prosjekt}> <github markdown page to edit>, arguments given:"
+  args=("$@")
+  ELEMENTS=${#args[@]}
+
+  for (( i=0;i<ELEMENTS;i++ )); do
+      echo ::error:: "${args[${i}]}"
+  done
   exit 1;
 fi
 
@@ -32,28 +38,28 @@ cd "$FULL_PATH_TO_FOLDER_FOR_GITHUB_PAGES/generated" || exit 1;
 COLUMN_A=""
 COLUMN_B=""
 
-for folder in $(find . -type d -depth 1 | sort -r | sed 's;./;;'); do
-  if [[ -z $COLUMN_A ]]; then
-    COLUMN_A=$folder
-    echo -n "$folder - "
-  else
-    if [[ -z $COLUMN_B ]]; then
-      COLUMN_B=$folder
-    echo -n "$folder - "
+for folder in $(find "$PWD" -type d -maxdepth 1 | sort -r | sed "s;$PWD;;" | sed 's;/;;'); do
+  if [[ -n "$folder" ]]; then
+    if [[ -z $COLUMN_A ]]; then
+      COLUMN_A=$folder
+      echo -n "$folder - "
     else
-      echo "$folder"
-      echo "[$COLUMN_A]($INPUT_PAGES_ADDRESS/generated/$COLUMN_A) | [$COLUMN_B]($INPUT_PAGES_ADDRESS/generated/$COLUMN_B) | [$folder]($INPUT_PAGES_ADDRESS/generated/$folder)" >> "$INPUT_PATH_TO_GITHUB_PAGE"
-      COLUMN_A=""
-      COLUMN_B=""
+      if [[ -z $COLUMN_B ]]; then
+        COLUMN_B=$folder
+      echo -n "$folder - "
+      else
+        echo "$folder"
+        echo "[$COLUMN_A]($INPUT_PAGES_ADDRESS/generated/$COLUMN_A) | [$COLUMN_B]($INPUT_PAGES_ADDRESS/generated/$COLUMN_B) | [$folder]($INPUT_PAGES_ADDRESS/generated/$folder)" >> "$INPUT_PATH_TO_GITHUB_PAGE"
+        COLUMN_A=""
+        COLUMN_B=""
+      fi
     fi
   fi
 done
 
 LAST_LINE=""
 
-if [[ -z $COLUMN_A ]]; then
-  echo "no more columns..."
-else
+if [[ -n $COLUMN_A ]]; then
   if [[ -z $COLUMN_B ]]; then
     LAST_LINE="[$COLUMN_A]($INPUT_PAGES_ADDRESS/generated/$COLUMN_A) | nbsp; | nbsp;"
   else
