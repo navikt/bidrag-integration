@@ -44,15 +44,15 @@ echo "<table>" >> "$INPUT_PATH_TO_GITHUB_PAGE"
 for folder in $(find "$PWD" -type d -maxdepth 1 | sort -r | sed "s;$PWD;;" | sed 's;/;;'); do
   if [[ -n "$folder" ]]; then
     if [[ -z $COLUMN_A ]]; then
-      COLUMN_A="<td> [$folder]($HREF_START/$folder>) </td>"
+      COLUMN_A="<td><a href=\"$HREF_START/$folder\">$folder</a></td>"
       echo -n "$folder - "
     else
       if [[ -z $COLUMN_B ]]; then
-        COLUMN_B="<td> [$folder]($HREF_START/$folder>) </td>"
+        COLUMN_B="<td><a href=\"$HREF_START/$folder\">$folder</a></td>"
       echo -n "$folder - "
       else
         echo "$folder"
-        echo "  <tr>$COLUMN_A $COLUMN_B <td> [$folder]($HREF_START/$folder>) </td></tr> " >> "$INPUT_PATH_TO_GITHUB_PAGE"
+        echo "  <tr>$COLUMN_A $COLUMN_B <td><a href=\"$HREF_START/$folder\">$folder</a></td></tr> " >> "$INPUT_PATH_TO_GITHUB_PAGE"
         COLUMN_A=""
         COLUMN_B=""
       fi
