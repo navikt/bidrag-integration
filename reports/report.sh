@@ -37,19 +37,22 @@ cd "$FULL_PATH_TO_FOLDER_FOR_GITHUB_PAGES/generated" || exit 1;
 
 COLUMN_A=""
 COLUMN_B=""
+HREF_START="$INPUT_PAGES_ADDRESS/generated"
+
+echo "<table>" >> "$INPUT_PATH_TO_GITHUB_PAGE"
 
 for folder in $(find "$PWD" -type d -maxdepth 1 | sort -r | sed "s;$PWD;;" | sed 's;/;;'); do
   if [[ -n "$folder" ]]; then
     if [[ -z $COLUMN_A ]]; then
-      COLUMN_A=$folder
+      COLUMN_A="<td> [$folder]($HREF_START/$folder>) </td>"
       echo -n "$folder - "
     else
       if [[ -z $COLUMN_B ]]; then
-        COLUMN_B=$folder
+        COLUMN_B="<td> [$folder]($HREF_START/$folder>) </td>"
       echo -n "$folder - "
       else
         echo "$folder"
-        echo "[$COLUMN_A]($INPUT_PAGES_ADDRESS/generated/$COLUMN_A) | [$COLUMN_B]($INPUT_PAGES_ADDRESS/generated/$COLUMN_B) | [$folder]($INPUT_PAGES_ADDRESS/generated/$folder) " >> "$INPUT_PATH_TO_GITHUB_PAGE"
+        echo "  <tr>$COLUMN_A $COLUMN_B <td> [$folder]($HREF_START/$folder>) </td></tr> " >> "$INPUT_PATH_TO_GITHUB_PAGE"
         COLUMN_A=""
         COLUMN_B=""
       fi
@@ -61,11 +64,12 @@ LAST_LINE=""
 
 if [[ -n $COLUMN_A ]]; then
   if [[ -z $COLUMN_B ]]; then
-    LAST_LINE="[$COLUMN_A]($INPUT_PAGES_ADDRESS/generated/$COLUMN_A) | nbsp; | nbsp;"
+    LAST_LINE="  <tr>$COLUMN_A <td></td> <td></td> </tr>"
   else
-    LAST_LINE="[$COLUMN_A]($INPUT_PAGES_ADDRESS/generated/$COLUMN_A) | [$COLUMN_B]($INPUT_PAGES_ADDRESS/generated/$COLUMN_B) | nbsp;"
+    LAST_LINE="  <tr>$COLUMN_A $COLUMN_B <td></td></tr>"
   fi
 fi
 
-echo "$LAST_LINE \n" >> "$INPUT_PATH_TO_GITHUB_PAGE"
+echo "$LAST_LINE" >> "$INPUT_PATH_TO_GITHUB_PAGE"
+echo "</table>" >> "$INPUT_PATH_TO_GITHUB_PAGE"
 echo "finished creating links..."
