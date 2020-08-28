@@ -14,6 +14,7 @@
 
 versjon | endringstype | beskrivelse
 ---|---|---
+v4.0.0 | endret | `cucumber-clone` extra clones to prepare for cucumber integration testingd 
 v3.0.3 | endret | `reports` reports are added in a html table
 v3.0.2 | endret | `link-pages` correct shell variable name
 v3.0.1 | endret | `cucumber-latest` output er samme som innhold i bidrag-dev.json
