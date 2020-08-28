@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -x
 
 ############################################
 #
@@ -10,8 +10,8 @@ set -e
 # 2b) ved main branch
 #    - clone cucumber-prosjektet, main branch
 # 3) sjekker om vi har all konfigurasjon som trengs til integrasjonstestingen (passord for nav-bruker og testbrukere)
-# 4) klon GITHUB_REPOSITORY i mappa "simple" for at cucumber skal lese nais-konfigurasjon
-# 5) kloner også eventuelle main brancher til fra extra clones inn i simple mappa
+# 4) klon GITHUB_REPOSITORY i mappa INPUT_FOLDER_NAIS_APPS for at cucumber skal lese nais-konfigurasjon
+# 5) kloner også eventuelle main brancher til fra extra clones inn i denne mappa
 #
 ############################################
 
@@ -23,7 +23,7 @@ fi
 INPUT_CUCUMBER_PROJECT=$1
 INPUT_FOLDER_NAIS_APPS=$2
 INPUT_EXTRA_CLONES=$3
-INPUT_DELIMITER=$3
+INPUT_DELIMITER=$4
 
 cd "$RUNNER_WORKSPACE" || exit 1 # cd til RUNNER_WORKSPACE eller hard exit
 sudo rm -rf "$INPUT_CUCUMBER_PROJECT"
@@ -64,22 +64,28 @@ cd "$INPUT_FOLDER_NAIS_APPS" || exit 1;
 CREDENTIALS=""
 
 if [[ -n "$GITHUB_TOKEN" ]]; then
-  CREDENTIALS="$GITHUB_ACTOR:$GITHUB_TOKEN@"
+  CREDENTIALS="${GITHUB_ACTOR}:${GITHUB_TOKEN}@"
 fi
 
 # shellcheck disable=SC2046
 # shellcheck disable=SC2086
-git clone $(echo --depth 1 $CLONE_BRANCH https://"$CREDENTIALS"github.com/$GITHUB_REPOSITORY  | sed 's/"//g')
+# git clone $(echo -v --depth 1 $CLONE_BRANCH https://"$CREDENTIALS"github.com/$GITHUB_REPOSITORY)
 
 if [[ -n $INPUT_EXTRA_CLONES ]]; then
-  IFS=$INPUT_DELIMITER
-  read -ra clones <<< "$INPUT_EXTRA_CLONES"
+#  IFS=$INPUT_DELIMITER
+#  read -ra clones <<< "$INPUT_EXTRA_CLONES"
 
-  for clone in "${clones[@]}"; do
-        # shellcheck disable=SC2046
-        git clone $(echo --depth 1 https://"$CREDENTIALS"github.com/navikt/"$clone" | sed 's/"//g')
-  done
+#  for clone in "${clones[@]}"; do
+    # shellcheck disable=SC2046
+    git clone -v --depth 1 ${CLONE_BRANCH} https://${CREDENTIALS}github.com/${GITHUB_REPOSITORY}
+#    git clone -v --depth 1 --branch=main https://${CREDENTIALS}github.com/navikt/${clone}
+    git clone --depth 1 --branch=main https://jactor-rises:${GITHUB_TOKEN}@github.com/navikt/bidrag-dokument-testdata
+#    git clone -v --depth 1 --branch=main https://${CREDENTIALS}github.com/navikt/bidrag-dokument-testdata
+#  done
 fi
 
+pwd
+ls -al
+
 cd "$RUNNER_WORKSPACE" || echo "could not enter ws: $RUNNER_WORKSPACE"
-find . -type f -name "q*.json"
+find . -type f -name "*.json"
