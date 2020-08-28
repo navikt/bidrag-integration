@@ -1541,14 +1541,14 @@ const exec = __webpack_require__(960);
 async function run() {
   const cucumberProject = core.getInput('cucumber_project')
   const folderNaisApps = core.getInput('folder_nais_apps')
-  const extraClones = core.getInput('extra_clones')
   const delimiter = core.getInput('delimiter')
+  const extraClones = core.getInput('extra_clones')
 
   try {
     // Execute cucumber-clone bash script
     await exec.exec(
         `${__dirname}/../cucumber-clone.sh`,
-        [cucumberProject, folderNaisApps, extraClones, delimiter]
+        [cucumberProject, folderNaisApps, delimiter, extraClones]
     );
   } catch (error) {
     core.setFailed(error.message);
