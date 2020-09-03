@@ -22,7 +22,7 @@ if [[ $GITHUB_REPOSITORY == "navikt/bidrag-cucumber-backend" ]]; then
   BRANCH="${GITHUB_REF#refs/heads/}"
   git clone --depth 1 branch=${BRANCH} https://github.com/navikt/bidrag-cucumber-backend
 else
-  git clone git clone --depth 1 https://github.com/navikt/bidrag-cucumber-backend
+  git clone --depth 1 https://github.com/navikt/bidrag-cucumber-backend
 fi
 
 
