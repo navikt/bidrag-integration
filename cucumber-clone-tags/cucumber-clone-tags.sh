@@ -12,9 +12,6 @@ set -x
 ############################################
 
 cd "$RUNNER_WORKSPACE" || exit 1
-echo deleting files
-# shellcheck disable=SC2035
-sudo rm -rf *
 
 if [[ -z $WORKFLOW_CREDENTIALS ]]; then
   echo ::error:: "Credentials to clone repositories must be provided, value: <github username>:<github personal access token>"
