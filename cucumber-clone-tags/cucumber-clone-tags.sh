@@ -20,23 +20,23 @@ fi
 
 if [[ $GITHUB_REPOSITORY == "navikt/bidrag-cucumber-backend" ]]; then
   BRANCH="${GITHUB_REF#refs/heads/}"
+  # shellcheck disable=SC2086
   git clone --depth 1 branch=${BRANCH} https://github.com/navikt/bidrag-cucumber-backend
 else
-  git clone git clone --depth 1 https://github.com/navikt/bidrag-cucumber-backend
+  git clone --depth 1 https://github.com/navikt/bidrag-cucumber-backend
 fi
-
-
-pwd
-ls -al
 
 cd bidrag-cucumber-backend || exit 1
 # shellcheck disable=SC2038
 USE_NAIS_APPS="$(find . -type f -name "*.feature" | xargs cat | grep @bidrag- | grep -v @bidrag-cucumber | sort -u | sed 's/@//')"
 
-mkdir nais-apps
-cd nais-apps || exit 1
+mkdir simple
+cd simple || exit 1
 
 for app in $USE_NAIS_APPS
 do
-  git clone --depth 1 "https://jactor-rises:$WORKFLOW_CREDENTIALS@github.com/navikt/$app"
+  git clone --depth 1 https://${WORKFLOW_CREDENTIALS}@github.com/navikt/${app}
 done
+
+pwd
+ls -al
