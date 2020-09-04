@@ -6,7 +6,7 @@ set -e
 # Følgende skjer i dette skriptet
 # - Sjekker at miljøvariabelen WORKFLOW_CREDENTIALS er satt
 # - Går til RUNNER_WORKSPACE. og kloner bidrag-cucumber-backend, (på branch som bygges hvis det er bidrag-cucumber-backen)
-# - Kloner HEAD til bidrag-cucumber-backend
+# - Kloner bidrag-cucumber-backend (bare HEAD når det ikke er bidrag-cucumber-backend som bygges)
 # - Kloner HEAD til bidragsprosjektene som er tagget i cucumber-features
 #
 ############################################
@@ -20,14 +20,14 @@ fi
 
 if [[ $GITHUB_REPOSITORY == "navikt/bidrag-cucumber-backend" ]]; then
   BRANCH="${GITHUB_REF#refs/heads/}"
-  # shellcheck disable=SC2086
-  git clone --depth 1 branch=${BRANCH} https://github.com/navikt/bidrag-cucumber-backend
+  git clone https://github.com/navikt/bidrag-cucumber-backend
+  cd bidrag-cucumber-backend || exit 1
+  git checkout ${BRANCH}
 else
   git clone --depth 1 https://github.com/navikt/bidrag-cucumber-backend
+  cd bidrag-cucumber-backend || exit 1
 fi
 
-cd bidrag-cucumber-backend || exit 1
-# shellcheck disable=SC2038
 USE_NAIS_APPS="$(find . -type f -name "*.feature" | xargs cat | grep @bidrag- | grep -v @bidrag-cucumber | sort -u | sed 's/@//')"
 
 mkdir simple
