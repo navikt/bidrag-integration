@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -x
 
 ############################################
 #
@@ -20,14 +20,13 @@ fi
 
 if [[ $GITHUB_REPOSITORY == "navikt/bidrag-cucumber-backend" ]]; then
   BRANCH="${GITHUB_REF#refs/heads/}"
-  # shellcheck disable=SC2086
-  git clone --depth 1 branch=${BRANCH} https://github.com/navikt/bidrag-cucumber-backend
+  git clone https://github.com/navikt/bidrag-cucumber-backend
+  git checkout ${BRANCH}
 else
   git clone --depth 1 https://github.com/navikt/bidrag-cucumber-backend
 fi
 
 cd bidrag-cucumber-backend || exit 1
-# shellcheck disable=SC2038
 USE_NAIS_APPS="$(find . -type f -name "*.feature" | xargs cat | grep @bidrag- | grep -v @bidrag-cucumber | sort -u | sed 's/@//')"
 
 mkdir simple
