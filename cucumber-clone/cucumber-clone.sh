@@ -17,7 +17,7 @@ set -e
 ############################################
 
 if [[ $# -ne 4 ]]; then
-  echo "Bruk: cucumber-clone.sh <cucumber_prosjekt> <folder_nais_apps> <delimiter> [<extra clones>], see action.yaml (last arguments are optional)"
+  echo "Bruk: cucumber-clone.sh <cucumber_prosjekt> <folder_nais_apps> <delimiter> [<extra clones>], see action.yaml (last argument is optional)"
   exit 1;
 fi
 
@@ -75,6 +75,7 @@ if [[ -n "$GITHUB_TOKEN" ]]; then
   CREDENTIALS="${GITHUB_ACTOR}:${GITHUB_TOKEN}@"
 fi
 
+echo "cloning head of $GITHUB_REPOSITORY, branch=$BRANCH"
 # shellcheck disable=SC2046
 # shellcheck disable=SC2086
 git clone --depth 1 ${CLONE_BRANCH} https://${CREDENTIALS}github.com/${GITHUB_REPOSITORY}
