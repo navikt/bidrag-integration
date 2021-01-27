@@ -1,5 +1,10 @@
 name: Clone tagged nais-apps
 description: Clones all nais application being tagged @bidrag- (not @bidrag-cucumber)
+inputs:
+  nais_apps_folder:
+    description: "relative folder to where nais applications will be cloned"
+    required: true
+    default: "apps"
 runs:
   using: node12
   main: dist/index.js

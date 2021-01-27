@@ -4,7 +4,7 @@ set -e
 ############################################
 #
 # Følgende skjer i dette skriptet:
-# 1a) sjekker antall og setter inputs og sletter cucumber prosjektet hvis det finnes fra før
+# 1a) sjekker antall inputs, samt setter inputs og sletter cucumber prosjektet hvis det finnes fra før
 # 1b) sjekker at miljøvariabelen EXTRA_CLONES_CREDENTIALS er oppgitt
 # 2a) ved feature branch
 #    - clone cucumber-prosjektet, branch=feature (hvis den finnes), hvis ikke brukes main

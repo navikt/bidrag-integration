@@ -3,7 +3,8 @@
 
 ## Actions dealing with integrations
 
-- cucumber-clone: clone a github cucumber project and add folder simple with a simple clone of the project which is beeing tested
+- cucumber-clone: clone a github cucumber project and add folder "apps" (or what is chosen) with clones of the projects which are being tested
+- cucumber-clone-tags: clones all tagged cucumber test (with bidrag-*) to "apps" folder (or what is chosen) to be used when running cucumber tests
 - cucumber-latest: hent antall ok/feilede teststeg fra cucumber.json
 - cucumber-move: flytter html for siste cumber-rapport til docs mappa for visining på github pages
 - cucumber-status: skriver antall ok/felede testeg til github pages
