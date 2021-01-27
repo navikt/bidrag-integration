@@ -15,6 +15,7 @@
 
 versjon | endringstype | beskrivelse
 ---|---|---
+v4.2.0 | endret | `cucumber-clone` & `cucumber-clone-tags`: removed hard coding of NAIS_PROJECT_FOLDER, defaults to "apps" if not specified
 v4.1.2 | endret | bumped actions/core version, also added and corrected echo statement on `cucumber-clone-tags`
 v4.1.1 | endret | `cucumber-clone-tags` clones full clone of `bidrag-backend-cucumber` to use feature branch when this is the repo being buildt
 v4.1.0 | opprettet | `cucumber-clone-tags` clones `bidrag-backend-cucumber` and all applications from cucumber tags
