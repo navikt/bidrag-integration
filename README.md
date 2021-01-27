@@ -3,7 +3,8 @@
 
 ## Actions dealing with integrations
 
-- cucumber-clone: clone a github cucumber project and add folder simple with a simple clone of the project which is beeing tested
+- cucumber-clone: clone a github cucumber project and add folder "apps" (or what is chosen) with clones of the projects which are being tested
+- cucumber-clone-tags: clones all tagged cucumber test (with bidrag-*) to "apps" folder (or what is chosen) to be used when running cucumber tests
 - cucumber-latest: hent antall ok/feilede teststeg fra cucumber.json
 - cucumber-move: flytter html for siste cumber-rapport til docs mappa for visining på github pages
 - cucumber-status: skriver antall ok/felede testeg til github pages
@@ -14,6 +15,7 @@
 
 versjon | endringstype | beskrivelse
 ---|---|---
+v4.2.0 | endret | `cucumber-clone` & `cucumber-clone-tags`: removed hard coding of NAIS_PROJECT_FOLDER, defaults to "apps" if not specified
 v4.1.2 | endret | bumped actions/core version, also added and corrected echo statement on `cucumber-clone-tags`
 v4.1.1 | endret | `cucumber-clone-tags` clones full clone of `bidrag-backend-cucumber` to use feature branch when this is the repo being buildt
 v4.1.0 | opprettet | `cucumber-clone-tags` clones `bidrag-backend-cucumber` and all applications from cucumber tags

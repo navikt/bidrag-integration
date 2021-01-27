@@ -9,9 +9,9 @@ inputs:
     required: true
     default: bidrag-cucumber-backend
   folder_nais_apps:
-    description: The name of the folder where the nais-application will be cloned for simple access to the nais configuration
+    description: The name of the folder where the nais-application will be cloned so tests can access nais configuration
     required: true
-    default: simple
+'    default: apps
   extra_clones:
     description: delimiter-separated list with project to be cloned alongside the nais-application beeing tested, ex <testdata-app-a><delimiter-character><testdata-app-b>
     required: false
