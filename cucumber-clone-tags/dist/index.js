@@ -1579,9 +1579,12 @@ const exec = __webpack_require__(960);
 
 async function run() {
   try {
-    // Execute cucumber-clone bash script
+    const nais_apps_folder = core.getInput('nais_apps_folder')
+
+    // Execute cucumber-clone-tags bash script
     await exec.exec(
-        `${__dirname}/../cucumber-clone-tags.sh`);
+        `${__dirname}/../cucumber-clone-tags.sh`, [nais_apps_folder]
+    );
   } catch (error) {
     core.setFailed(error.message);
   }
