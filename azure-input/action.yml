@@ -1,0 +1,12 @@
+name: create azure inputs
+description: create azure input for apps via kubernetes
+inputs:
+  applications:
+    description: a comma separated list of all applications (at least one) which azure input is to be created for
+    required: true
+outputs:
+  azure_input_path:
+    description: the path to where secrets from azure applications have been stored
+runs:
+  using: node12
+  main: dist/index.js
