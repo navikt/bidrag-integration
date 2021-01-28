@@ -12,7 +12,7 @@ set -e
 #   2) når denne applikasjonen finnes
 #     - så brukes kubernetes til å hente følgende azure info: CLIENT_ID, TENANT_ID og CLIENT_SECRET
 #     - bruk jq til å lagre denne azure informasjonen som json inn i json mappa
-#   3)
+# - returnerer full sti til mappa som inneholder azure input
 #
 ############################################
 
@@ -32,7 +32,7 @@ do
 
   KUBE_APP=$name
 
-  if [ $GITHUB_REF = "refs/heads/main" ]; then
+  if [[ $GITHUB_REF == "refs/heads/main" ]]; then
     echo -n "Main branch ($GITHUB_REF): "
   else
     KUBE_APP+="-feature"
@@ -61,5 +61,5 @@ do
   fi
 done
 
-cd "$AZURE_APP"
+cd "$AZURE_FOLDER"
 echo ::set-output name=azure_input_path::"$PWD"
