@@ -5,9 +5,9 @@ async function run() {
   try {
     const applications = core.getInput('applications')
 
-    // Execute cucumber-clone-tags bash script
+    // Execute create-integration-input bash script
     await exec.exec(
-        `${__dirname}/../createAzureInput.sh`, [applications]
+        `${__dirname}/../create-integration-input.sh`, [applications]
     );
   } catch (error) {
     core.setFailed(error.message);

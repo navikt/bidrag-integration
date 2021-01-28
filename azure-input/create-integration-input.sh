@@ -45,8 +45,6 @@ do
     KUBE_APP+="-feature"
   fi
 
-  echo ::info::" Get azureapp on $BRANCH-branch: $KUBE_APP"
-
   AZURE_APP="$(kubectl get azureapp -n bidrag $KUBE_APP || true)"
 
   if [[ -n "$AZURE_APP" ]]; then
@@ -81,13 +79,12 @@ do
 done
 
 echo "{
-  \"azureInputs\":[
-$AZURE_INPUTS
-  ],
+  \"azureInputs\":[$AZURE_INPUTS],
   \"environment\":\"$BRANCH\",
   \"naisProjectFolder\":\"src/test/resources\",
   \"userTest\":\"z104364\"
 }
 " > integrationInput.json
 
+cat integrationInput.json
 echo ::set-output name=integration_input_path::"$PWD/integrationInput.json"
