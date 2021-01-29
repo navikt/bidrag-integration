@@ -4,8 +4,11 @@ set -e
 ############################################
 #
 # Følgende skjer i dette skriptet
-# - forventer input: en komma separert liste med applikasjonene som det skal hentes azure input for
-# - lager en "array" av alle applikasjonsnavnene
+# - forventer og setter input:
+#   > komma separert liste med applikasjonene som det skal hentes azure input for (blir transformert til en array av navn)
+#   > relative path to where to store the json file
+#   > nais project folder (path til hvor nais prosjekt(et/ene) som testes har sin nais konfigurasjon
+#   > test brukerens brukernavn
 # - lager mappa json som brukes til å lagre all azure input til disse applikasjonene
 # - setter variabel som sier om det er main eller feature branch
 # - for hvert navn i "array":
@@ -19,16 +22,32 @@ set -e
 #
 ############################################
 
-if [[ $# -ne 1 ]]; then
-  echo "Usage: ./createAzureInput.sh <azure-app-1,azure-app-2...,azure-app-x>"
-  echo "     - argument: create a path where azure-app-1.json ... azure-app-x.json are saved. Applications not secured with azure are skipped"
+if [[ $# -ne 4 ]]; then
+  echo "Usage: ./createAzureInput.sh <application-1,...application-x> <json/integrationInput.json> </path/to/nais/projects> <test user name>"
+  echo "     - 1: names of possible azure applications separated by comma: azure-app-1.azure-app-2,...azure-app-x"
+  echo "     - 2: relative path to integrationInput.json"
+  echo "     - 3: expected path of where all the projects with nais configuration are located"
+  echo "     - 4: the username of the test user"
   exit 1
 fi
 
-NAMES=( $(echo "$1" | sed 's/,/ /g') )
+INPUT_NAMES=( $(echo "$1" | sed 's/,/ /g') )
+INPUT_JSON_RELATIVE_PATH=$2
+INPUT_NAIS_PROJECT_FOLDER=$3
+INPUT_TEST_USERNAME=$4
 
-JSON_FOLDER="json"
-mkdir "$JSON_FOLDER" || true
+# expects that this is action will run on a runner for bidrag-cucumber-backend
+cd "$GITHUB_WORKSPACE/bidrag-cucumber-backend"
+PATH_TO_CUCUMBER=$( pwd )
+
+# fjerner filnavn (altså alt etter siste /) og lager en array av foldernavn (det mellom gjenstående /)
+RELATIVE_PATH=( $(echo $INPUT_JSON_RELATIVE_PATH | sed 's|\(.*\)/.*|\1|' | tr '/' ' ' ) )
+
+for folder in $RELATIVE_PATH
+do
+  mkdir $folder
+  cd $folder
+done
 
 if [[ $GITHUB_REF == "refs/heads/main" ]]; then
   BRANCH="main"
@@ -36,7 +55,7 @@ else
   BRANCH="feature"
 fi
 
-for name in "${NAMES[@]}"
+for name in "${INPUT_NAMES[@]}"
 do
 
   KUBE_APP=$name
@@ -61,11 +80,9 @@ do
                   --arg tid "$TENANT_ID" \
                   '{name: $nme, clientId: $cid, clientSecret: $cls, tenant: $tid}' )
 
-    echo "$JSON_STRING" > "$JSON_FOLDER/$KUBE_APP.json"
+    echo "$JSON_STRING" > "$KUBE_APP.json"
   fi
 done
-
-cd "$JSON_FOLDER"
 
 AZURE_INPUTS=""
 
@@ -78,13 +95,14 @@ do
   fi
 done
 
+cd $PATH_TO_CUCUMBER
+
 echo "{
   \"azureInputs\":[$AZURE_INPUTS],
   \"environment\":\"$BRANCH\",
-  \"naisProjectFolder\":\"src/test/resources\",
-  \"userTest\":\"z104364\"
+  \"naisProjectFolder\":\"$INPUT_NAIS_PROJECT_FOLDER\",
+  \"userTest\":\"$INPUT_TEST_USERNAME\"
 }
-" > integrationInput.json
+" > $INPUT_JSON_RELATIVE_PATH
 
-cat integrationInput.json
-echo ::set-output name=integration_input_path::"$PWD/integrationInput.json"
+cat $INPUT_JSON_RELATIVE_PATH
