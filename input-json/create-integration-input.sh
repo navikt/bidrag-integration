@@ -23,10 +23,10 @@ set -e
 ############################################
 
 if [[ $# -ne 4 ]]; then
-  echo "Usage: ./createAzureInput.sh <application-1,...application-x> <json/integrationInput.json> </path/to/nais/projects> <test user name>"
+  echo "Usage: ./createAzureInput.sh <application-1,...application-x> <json/integrationInput.json> <relative/path/to/nais/projects> <test user name>"
   echo "     - 1: names of possible azure applications separated by comma: azure-app-1.azure-app-2,...azure-app-x"
   echo "     - 2: relative path to integrationInput.json"
-  echo "     - 3: expected path of where all the projects with nais configuration are located"
+  echo "     - 3: relative path of where all the projects with nais configuration are located"
   echo "     - 4: the username of the test user"
   exit 1
 fi
@@ -45,7 +45,7 @@ RELATIVE_PATH=( $(echo $INPUT_JSON_RELATIVE_PATH | sed 's|\(.*\)/.*|\1|' | tr '/
 
 for folder in $RELATIVE_PATH
 do
-  mkdir $folder
+  mkdir $folder || true
   cd $folder
 done
 
@@ -105,4 +105,5 @@ echo "{
 }
 " > $INPUT_JSON_RELATIVE_PATH
 
+echo "Created $PWD/$INPUT_JSON_RELATIVE_PATH"
 cat $INPUT_JSON_RELATIVE_PATH

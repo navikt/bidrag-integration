@@ -9,8 +9,9 @@ inputs:
     required: true
     default: json/integrationInput.json
   nais_project_folder:
-    description: path to folder where all projects with nais configurations are located
+    description: relative path to folder where all projects with nais configurations are located
     required: true
+    default: apps
   test_username:
     description: the username of the test user
     required: true
