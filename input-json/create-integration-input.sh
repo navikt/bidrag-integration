@@ -37,12 +37,19 @@ INPUT_NAIS_PROJECT_FOLDER=$3
 INPUT_TEST_USERNAME=$4
 
 # expects that this is action will run on a runner for bidrag-cucumber-backend
-cd "$GITHUB_WORKSPACE/bidrag-cucumber-backend"
+
+if [ -d "$GITHUB_WORKSPACE/bidrag-cucumber-backend" ]; then
+  cd "$GITHUB_WORKSPACE/bidrag-cucumber-backend"
+else
+  cd "$GITHUB_WORKSPACE"
+fi
+
 PATH_TO_CUCUMBER=$( pwd )
 
 # fjerner filnavn (altså alt etter siste /) og lager en array av foldernavn (det mellom gjenstående /)
 RELATIVE_PATH=( $(echo $INPUT_JSON_RELATIVE_PATH | sed 's|\(.*\)/.*|\1|' | tr '/' ' ' ) )
 
+# lager alle mappene til hvor input json skal lagres
 for folder in $RELATIVE_PATH
 do
   mkdir $folder || true
