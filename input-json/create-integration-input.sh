@@ -6,6 +6,7 @@ set -x
 # Følgende skjer i dette skriptet
 # - forventer og setter input:
 #   > komma separert liste med applikasjonene som det skal hentes azure input for (blir transformert til en array av navn)
+#   > - hvis dette parameteret ikke sendes med, vil applikasjonsnavnet hentes fra github repo
 #   > relative path to where to store the json file
 #   > nais project folder (path til hvor nais prosjekt(et/ene) som testes har sin nais konfigurasjon
 #   > test brukerens brukernavn
@@ -31,7 +32,13 @@ if [[ $# -ne 4 ]]; then
   exit 1
 fi
 
-INPUT_NAMES=( $(echo "$1" | sed 's/,/ /g') )
+INPUT_NAMES_PARAMETER=$1
+
+if [[ -z "$INPUT_NAMES_PARAMETER" ]]; then
+  INPUT_NAMES_PARAMETER=${GITHUB_REPOSITORY/navikti\/}
+fi
+
+INPUT_NAMES_ARRAY=( $(echo "$INPUT_NAMES_PARAMETER" | sed 's/,/ /g') )
 INPUT_JSON_RELATIVE_PATH=$2
 INPUT_NAIS_PROJECT_FOLDER=$3
 INPUT_TEST_USERNAME=$4
@@ -62,7 +69,7 @@ else
   BRANCH="feature"
 fi
 
-for name in "${INPUT_NAMES[@]}"
+for name in "${INPUT_NAMES_ARRAY[@]}"
 do
 
   KUBE_APP=$name

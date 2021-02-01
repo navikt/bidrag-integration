@@ -2,8 +2,8 @@ name: create integeration input
 description: create integration input with azure input for apps via kubernetes
 inputs:
   applications:
-    description: a comma separated list of all applications (at least one) which azure input is to be created for
-    required: true
+    description: a comma separated list of all applications which azure input is to be created for (if not submitted, the name of github repo will be used)
+    required: false
   json_relative_path:
     description: relative path to where the json input file will be stored
     required: true
