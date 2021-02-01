@@ -36,6 +36,10 @@ jobs:
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:
           artifact_folder: bidrag-integration/cucumber-status
+      - name: Install integration-input
+        uses: navikt/bidrag-node/build-with-ncc@v1
+        with:
+          artifact_folder: bidrag-integration/input-json
       - name: Install link-pages
         uses: navikt/bidrag-node/build-with-ncc@v1
         with:

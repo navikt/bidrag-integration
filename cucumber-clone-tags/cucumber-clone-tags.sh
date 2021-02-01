@@ -41,10 +41,17 @@ USE_NAIS_APPS="$(find . -type f -name "*.feature" | xargs cat | grep @bidrag- | 
 mkdir "$NAIS_APPLICATION_FOLDER"
 cd "$NAIS_APPLICATION_FOLDER" || exit 1
 
+CLONED_APPS=""
+
 for app in $USE_NAIS_APPS
 do
   git clone --depth 1 https://${WORKFLOW_CREDENTIALS}@github.com/navikt/${app}
+
+  if [[ -z "$CLONED_APPS" ]]; then
+    CLONED_APPS=$app
+  else
+    CLONED_APPS+=",$app"
+  fi
 done
 
-pwd
-ls -al
+echo ::set-output name=cloned_apps::"$CLONED_APPS"

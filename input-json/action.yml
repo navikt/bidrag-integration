@@ -1,0 +1,20 @@
+name: create integeration input
+description: create integration input with azure input for apps via kubernetes
+inputs:
+  applications:
+    description: a comma separated list of all applications (at least one) which azure input is to be created for
+    required: true
+  json_relative_path:
+    description: relative path to where the json input file will be stored
+    required: true
+    default: json/integrationInput.json
+  nais_project_folder:
+    description: relative path to folder where all projects with nais configurations are located
+    required: true
+    default: apps
+  test_username:
+    description: the username of the test user
+    required: true
+runs:
+  using: node12
+  main: dist/index.js
