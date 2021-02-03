@@ -6,6 +6,7 @@ set -e
 # Følgende skjer i dette skriptet
 # - forventer og setter input:
 #   > komma separert liste med applikasjonene som det skal hentes azure input for (blir transformert til en array av navn)
+#   > - hvis dette parameteret ikke sendes med, vil applikasjonsnavnet hentes fra github repo
 #   > relative path to where to store the json file
 #   > nais project folder (path til hvor nais prosjekt(et/ene) som testes har sin nais konfigurasjon
 #   > test brukerens brukernavn
@@ -22,29 +23,34 @@ set -e
 #
 ############################################
 
-if [[ $# -ne 4 ]]; then
-  echo "Usage: ./createAzureInput.sh <application-1,...application-x> <json/integrationInput.json> <relative/path/to/nais/projects> <test user name>"
+if [[ $# -ne 5 ]]; then
+  echo "Usage: ./createAzureInput.sh <application-1,...application-x> <json/integrationInput.json> <relative/path/to/nais/projects> <test user name> </file/base/path>"
   echo "     - 1: names of possible azure applications separated by comma: azure-app-1.azure-app-2,...azure-app-x"
   echo "     - 2: relative path to integrationInput.json"
   echo "     - 3: relative path of where all the projects with nais configuration are located"
   echo "     - 4: the username of the test user"
+  echo "     - 5: the base path for relative path to integrationInput and nais configuration folders"
   exit 1
 fi
 
-INPUT_NAMES=( $(echo "$1" | sed 's/,/ /g') )
+INPUT_NAMES_PARAMETER=$1
+
+if [[ -z "$INPUT_NAMES_PARAMETER" ]]; then
+  INPUT_NAMES_PARAMETER=${GITHUB_REPOSITORY/navikti\/}
+fi
+
+INPUT_NAMES_ARRAY=( $(echo "$INPUT_NAMES_PARAMETER" | sed 's/,/ /g') )
 INPUT_JSON_RELATIVE_PATH=$2
 INPUT_NAIS_PROJECT_FOLDER=$3
 INPUT_TEST_USERNAME=$4
+INPUT_BASE_PATH=$5
 
-# expects that this is action will run on a runner for bidrag-cucumber-backend
-
-if [ -d "$GITHUB_WORKSPACE/bidrag-cucumber-backend" ]; then
-  cd "$GITHUB_WORKSPACE/bidrag-cucumber-backend"
-else
-  cd "$GITHUB_WORKSPACE"
+if [[ ! -d "$INPUT_BASE_PATH" ]]; then
+  echo ::error:: "$INPUT_BASE_PATH is not a directory!!!"
 fi
 
-PATH_TO_CUCUMBER=$( pwd )
+cd "$INPUT_BASE_PATH" || exit 1
+PATH_TO_CUCUMBER="$INPUT_BASE_PATH"
 
 # fjerner filnavn (altså alt etter siste /) og lager en array av foldernavn (det mellom gjenstående /)
 RELATIVE_PATH=( $(echo $INPUT_JSON_RELATIVE_PATH | sed 's|\(.*\)/.*|\1|' | tr '/' ' ' ) )
@@ -62,7 +68,7 @@ else
   BRANCH="feature"
 fi
 
-for name in "${INPUT_NAMES[@]}"
+for name in "${INPUT_NAMES_ARRAY[@]}"
 do
 
   KUBE_APP=$name

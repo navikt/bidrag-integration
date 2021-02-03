@@ -5,7 +5,7 @@ runs:
   main: dist/index.js
 inputs:
   cucumber_project:
-    description: "The name of the github cucumber-project, ie: https://github.com/navikt/<cucumber_project>"
+    description: "The name of the github cucumber-project, ie: https://github.com/navikt/'cucumber_project'"
     required: true
     default: bidrag-cucumber-backend
   folder_nais_apps:
@@ -19,3 +19,6 @@ inputs:
     description: delimiter-character to use if extra clones is to be cloned
     required: true
     default: ;
+outputs:
+  cucumber_path:
+    description: the filepath to where the cucumber project is cloned
