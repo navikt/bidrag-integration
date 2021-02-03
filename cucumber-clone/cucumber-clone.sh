@@ -43,16 +43,16 @@ if [[ "$BRANCH" != "main" ]]; then
   IS_API_CHANGE=$(git ls-remote --heads $(echo "https://github.com/navikt/$INPUT_CUCUMBER_PROJECT $FEATURE_BRANCH" | sed "s/'//g") | wc -l)
 
   if [[ $IS_API_CHANGE -eq 1 ]]; then
-    echo "Using feature branch: $FEATURE_BRANCH"
+    echo "Using feature branch: $FEATURE_BRANCH, cloning to $PWD"
     # shellcheck disable=SC2086
     git clone --depth 1 --branch=$FEATURE_BRANCH https://github.com/navikt/$INPUT_CUCUMBER_PROJECT
   else
-    echo "Using /refs/heads/main"
+    echo "Using /refs/heads/main, cloning to $PWD"
     # shellcheck disable=SC2086
     git clone --depth 1 https://github.com/navikt/$INPUT_CUCUMBER_PROJECT
   fi
 else
-  echo "Using /refs/heads/main"
+  echo "Using /refs/heads/main, cloning to $PWD"
   # shellcheck disable=SC2086
   git clone --depth 1 https://github.com/navikt/$INPUT_CUCUMBER_PROJECT
 fi
