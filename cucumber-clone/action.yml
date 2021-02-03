@@ -11,7 +11,7 @@ inputs:
   folder_nais_apps:
     description: The name of the folder where the nais-application will be cloned so tests can access nais configuration
     required: true
-'    default: apps
+    default: apps
   extra_clones:
     description: delimiter-separated list with project to be cloned alongside the nais-application beeing tested, ex <testdata-app-a><delimiter-character><testdata-app-b>
     required: false
