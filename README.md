@@ -15,6 +15,8 @@
 
 versjon | endringstype | beskrivelse
 ---|---|---
+v5.1.0 | endret | `input-json`: input - base path 
+v5.1.0 | endret | `cucumber-clone`: output - cucumber path 
 v5.0.0-gamma | endret | `cucumber-clone`: syntax in action.yaml
 v5.0.0-beta | opprettet | `input-json`: lager json (default: integrationInput.json) som input for funksjonelle tester
 v5.0.0-alpha | endret | `cucumber-clone-tags`: alle "tagga" nais-applikasjoner er å finne som output fra denne actionen
