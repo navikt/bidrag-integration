@@ -1583,11 +1583,15 @@ async function run() {
     const jsonRelativePath = core.getInput('json_relative_path')
     const naisProjectFolder = core.getInput('nais_project_folder')
     const testUsername = core.getInput('test_username')
+    const basePath = core.getInput('base_path')
 
     // Execute create-integration-input bash script
     await exec.exec(
         `${__dirname}/../create-integration-input.sh`,
-        [applications, jsonRelativePath, naisProjectFolder, testUsername]
+        [
+          applications, jsonRelativePath, naisProjectFolder, testUsername,
+          basePath
+        ]
     );
   } catch (error) {
     core.setFailed(error.message);
