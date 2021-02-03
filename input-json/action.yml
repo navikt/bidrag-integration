@@ -2,8 +2,11 @@ name: create integeration input
 description: create integration input with azure input for apps via kubernetes
 inputs:
   applications:
-    description: a comma separated list of all applications which azure input is to be created for (if not submitted, the name of github repo will be used)
+    description: a comma separated list of all applications whith azure input is to be created for (if not provided, application from GITHUB_REPOSITORY is used)
     required: false
+  base_path:
+    description: the base path to where json_relative_path and nais_project_folder should be stored
+    required: true
   json_relative_path:
     description: relative path to where the json input file will be stored
     required: true

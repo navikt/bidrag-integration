@@ -19,3 +19,6 @@ inputs:
     description: delimiter-character to use if extra clones is to be cloned
     required: true
     default: ;
+outputs:
+  cucumber_path:
+    description: the filepath to where the cucumber project is cloned

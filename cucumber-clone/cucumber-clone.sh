@@ -11,7 +11,9 @@ set -x
 # 2b) ved main branch
 #    - clone cucumber-prosjektet, main branch
 # 3) sjekker om vi har all konfigurasjon som trengs til integrasjonstestingen (passord for nav-bruker og testbrukere)
-# 4) klon GITHUB_REPOSITORY i mappa INPUT_FOLDER_NAIS_APPS for at cucumber skal lese nais-konfigurasjon
+# 4) klon INPUT_CUCUMBER_PROJECT til mappa GITHUB_WORKSPACE
+# 5) lag "output" for denne mappa for hvor INPUT_CUCUMBER_PROJECT er i filsystemet
+# 6) klon INPUT_FOLDER_NAIS_APPS for at cucumber skal lese nais-konfigurasjon
 # 5) kloner også eventuelle main brancher til fra extra clones inn i denne mappa
 #
 ############################################
@@ -59,6 +61,7 @@ fi
 
 # gå til "INPUT_CUCUMBER_PROJECT" slik at json filene blir synlige i docker container når integrasjonstestene kjøres
 cd "$INPUT_CUCUMBER_PROJECT" || exit 1;
+echo ::set-output name=cucumber_path::"$PWD"
 
 if [[ "$BRANCH" == "main" ]]; then
   CLONE_BRANCH=""
@@ -89,9 +92,3 @@ if [[ -n $INPUT_EXTRA_CLONES ]]; then
     git clone --depth 1 --branch=main https://${EXTRA_CLONES_CREDENTIALS}@github.com/navikt/${clone}
   done
 fi
-
-pwd
-ls -al
-
-cd "$RUNNER_WORKSPACE" || echo "could not enter ws: $RUNNER_WORKSPACE"
-find . -type f -name "*.json"
