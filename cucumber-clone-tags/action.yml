@@ -8,6 +8,8 @@ inputs:
 outputs:
   cloned_apps:
     description: a comma separated list of all the names of the apps that have been cloned
+  cucumber_path:
+    description: the filepath to where the cucumber project is cloned
 runs:
   using: node12
   main: dist/index.js
