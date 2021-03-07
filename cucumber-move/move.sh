@@ -39,16 +39,16 @@ cd "$RUNNER_WORKSPACE" || exit 1
 FULL_PATH_TO_GENERATED_TEST_FILES="$RUNNER_WORKSPACE/$INPUT_FOLDER_MOVE_FROM"
 
 if [[ ! -d "$FULL_PATH_TO_GENERATED_TEST_FILES" ]]; then
-  echo "Filer som skal flyttes ($INPUT_FOLDER_MOVE_FROM) finnes ikke under $RUNNER_WORKSPACE"
-  ls -lAR
+  echo "Filer som skal flyttes ($INPUT_FOLDER_MOVE_FROM) finnes ikke under $PWD"
+  find . -type d | grep -v docs | grep -v .git | grep -v /src/ | grep -v /apps/ | grep -v /test-classes/
   exit 1
 fi
 
 FULL_PATH_TO_ROOT_PROJECT="$RUNNER_WORKSPACE/$INPUT_PROJECT_WHERE_TO_MOVE"
 
 if [[  ! -d "$FULL_PATH_TO_ROOT_PROJECT" ]]; then
-  echo "Prosjektet som skal ha generert test rapport ($INPUT_PROJECT_WHERE_TO_MOVE) finnes ikke under $RUNNER_WORKSPACE"
-  ls -lAR
+  echo "Prosjektet som skal ha generert test rapport ($INPUT_PROJECT_WHERE_TO_MOVE) finnes ikke under $PWD"
+  find . -type d | grep -v docs | grep -v .git | grep -v /src/ | grep -v /apps/ | grep -v /test-classes/
   exit 1
 fi
 
@@ -57,8 +57,8 @@ FULL_PATH_TO_DOCS_GENERATED="$FULL_PATH_TO_ROOT_PROJECT/docs/generated"
 FULL_PATH_TO_GENERATED_CUCUMBER_JSON="$RUNNER_WORKSPACE/$INPUT_LATEST_CUCUMBER_JSON"
 
 if [[ ! -d "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" ]]; then
-  echo "Full sti til generert cucumber rapport finnes ikke under $RUNNER_WORKSPACE"
-  ls -lAR
+  echo "Full sti til generert cucumber rapport finnes ikke under $PWD"
+  find . -type d | grep -v docs | grep -v .git | grep -v /src/ | grep -v /apps/ | grep -v /test-classes/
   exit 1
 fi
 
