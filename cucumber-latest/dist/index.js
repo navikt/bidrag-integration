@@ -1566,7 +1566,7 @@ const exec = __webpack_require__(960);
 
 async function run() {
   try {
-    const filepath = core.getInput('relative_filepath');
+    const filepath = core.getInput('path_to_json_file');
     const jsonPath = core.getInput('json_path');
 
     // Execute bash script
