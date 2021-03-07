@@ -3,7 +3,7 @@ const exec = require("@actions/exec");
 
 async function run() {
   try {
-    const filepath = core.getInput('relative_filepath');
+    const filepath = core.getInput('path_to_json_file');
     const jsonPath = core.getInput('json_path');
 
     // Execute bash script

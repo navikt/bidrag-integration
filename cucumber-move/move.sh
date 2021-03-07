@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -e
 
 ############################################
 #
@@ -87,3 +87,5 @@ BIDRAG_DEV_JSON="{$TIMESTAMP_JSON,$FOLDER_JSON}"
 
 echo "Oppretter $BIDRAG_DEV_JSON som $FULL_PATH_TO_DOCS_LATEST/bidrag-dev.json"
 echo "$BIDRAG_DEV_JSON" > "$FULL_PATH_TO_DOCS_LATEST/bidrag-dev.json"
+echo ::set-output name=gresult_json_file::"$FULL_PATH_TO_DOCS_LATEST"
+

@@ -29,22 +29,14 @@ fi
 
 INPUT_FILE_PATH=$1
 INPUT_JSON_PATH=$2
-FILE_PATH_RELEATIVE_TO_PWD=$(find . -type f | grep "$INPUT_FILE_PATH")
 
-if [ "$FILE_PATH_RELEATIVE_TO_PWD" == "" ]; then
-  echo ::error:: "could not find relative file path: $INPUT_FILE_PATH at PWD: $PWD"
-  exit 1;
-fi
-
-FULL_PATH_TO_JSON=$( echo "$PWD/$FILE_PATH_RELEATIVE_TO_PWD" | sed 's;/./;/;' ) # erstatter /./ med /
-
-echo "Filsti til json : $FULL_PATH_TO_JSON"
+echo "Filsti til json : $INPUT_FILE_PATH"
 echo "Json path til jq: $INPUT_JSON_PATH"
 
 NUMBER_PASSED=$(jq "$INPUT_JSON_PATH" "$FULL_PATH_TO_JSON" | grep -c passed || true)  # || true for å ikke få exit code > 0 hvis antall er 0
 NUMBER_FAILED=$(jq "$INPUT_JSON_PATH" "$FULL_PATH_TO_JSON" | grep -c failed || true)  # || true for å ikke få exit code > 0 hvis antall er o
-TIMESTAMP=$(echo "$FULL_PATH_TO_JSON" | sed 's/cucumber.json/bidrag-dev.json/' | xargs jq '.timestamp')
-GENERATED_FOLDER=$(echo "$FULL_PATH_TO_JSON" | sed 's/cucumber.json/bidrag-dev.json/' | xargs jq '.foldername' | sed 's/"//g')
+TIMESTAMP=$(echo "$FULL_PATH_TO_JSON" | xargs jq '.timestamp')
+GENERATED_FOLDER=$(echo "$FULL_PATH_TO_JSON" | xargs jq '.foldername' | sed 's/"//g')
 
 echo ::set-output name=generated_folder::"$GENERATED_FOLDER"
 echo ::set-output name=steps_failed::"$NUMBER_FAILED"
