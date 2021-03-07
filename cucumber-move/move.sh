@@ -13,7 +13,7 @@ set -x
 #
 # Følgende skjer i dette skriptet:
 # 1) setter input
-# 2) setter forventet stier til cucumber og bidrag-dev ut fra $RUNNER_WORKSPACE
+# 2) går til og setter forventet stier til testprosjekt og bidrag-dev ut fra $RUNNER_WORKSPACE
 # 3) oppretter generert mappe under docs/generated (oppretter timestampted mappe hvis dato-mappe finnes)
 # 4) kopierer generert html til generert mappe
 # 5) sletter gamle genererte html mapper rett under docs/latest mappa
@@ -35,27 +35,30 @@ INPUT_PROJECT_WHERE_TO_MOVE=$2
 INPUT_FRONT_PAGE=$3
 INPUT_LATEST_CUCUMBER_JSON=$4
 
+cd "$RUNNER_WORKSPACE" || exit 1
 FULL_PATH_TO_GENERATED_TEST_FILES="$RUNNER_WORKSPACE/$INPUT_FOLDER_MOVE_FROM"
 
-if [[ -d "$FULL_PATH_TO_GENERATED_TEST_FILES" ]]; then
-  echo "Full sti til html rapport finnes ikke under $PATH_TO_GENERATED_TEST_FILES"
+if [[ ! -d "$FULL_PATH_TO_GENERATED_TEST_FILES" ]]; then
+  echo "Filer som skal flyttes ($INPUT_FOLDER_MOVE_FROM) finnes ikke under $RUNNER_WORKSPACE"
+  ls -lAR
   exit 1
 fi
 
 FULL_PATH_TO_ROOT_PROJECT="$RUNNER_WORKSPACE/$INPUT_PROJECT_WHERE_TO_MOVE"
 
-if [[ -d "$FULL_PATH_TO_ROOT_PROJECT" ]]; then
-  echo "Full sti til prosjektet som skal ha generert test rapport finnes ikke under: $FULL_PATH_TO_ROOT_PROJECT"
+if [[  ! -d "$FULL_PATH_TO_ROOT_PROJECT" ]]; then
+  echo "Prosjektet som skal ha generert test rapport ($INPUT_PROJECT_WHERE_TO_MOVE) finnes ikke under $RUNNER_WORKSPACE"
+  ls -lAR
   exit 1
 fi
 
 FULL_PATH_TO_DOCS_LATEST="$FULL_PATH_TO_ROOT_PROJECT/docs/latest"
 FULL_PATH_TO_DOCS_GENERATED="$FULL_PATH_TO_ROOT_PROJECT/docs/generated"
-
 FULL_PATH_TO_GENERATED_CUCUMBER_JSON="$RUNNER_WORKSPACE/$INPUT_LATEST_CUCUMBER_JSON"
 
-if [[ -d "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" ]]; then
-  echo "Full sti til generert cucumber rapport finnes ikke under: $FULL_PATH_TO_GENERATED_CUCUMBER_JSON"
+if [[ ! -d "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" ]]; then
+  echo "Full sti til generert cucumber rapport finnes ikke under $RUNNER_WORKSPACE"
+  ls -lAR
   exit 1
 fi
 
@@ -67,19 +70,20 @@ fi
 
 FULL_PATH_TO_GENERATED_FOLDER="$FULL_PATH_TO_DOCS_GENERATED/$GENERATED_FOLDER"
 
-echo "Kopierer generert html og cucumber rapport til $FULL_PATH_TO_GENERATED_FOLDER"
-echo "Flytter generert html fra $FULL_PATH_TO_GENERATED_TEST_FILES"
-echo "Flytter generert html til $FULL_PATH_TO_DOCS_LATEST"
 echo "Flytter også cucumber rapport til $FULL_PATH_TO_DOCS_LATEST"
 
+echo "Kopierer generert html og cucumber rapport til $FULL_PATH_TO_GENERATED_FOLDER"
 cp -R "$FULL_PATH_TO_MOVE_FOLDER"/* "$FULL_PATH_TO_GENERATED_FOLDER"/.
 cp "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" "$FULL_PATH_TO_GENERATED_FOLDER/."
 
+echo "Flytter generert html og cucumber rapport til $FULL_PATH_TO_DOCS_LATEST"
 cd "$FULL_PATH_TO_DOCS_LATEST" && ls | xargs sudo rm -rf # sletter eksisterende rapport
 sudo mv "$FULL_PATH_TO_GENERATED_TEST_FILES/* $FULL_PATH_TO_DOCS_LATEST"
 sudo mv "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" "$FULL_PATH_TO_DOCS_LATEST."
 
 TIMESTAMP_JSON="\"timestamp\":\"$( date )\""
 FOLDER_JSON="\"foldername\":\"$GENERATED_FOLDER\""
+BIDRAG_DEV_JSON="{$TIMESTAMP_JSON,$FOLDER_JSON}"
 
-echo "{$TIMESTAMP_JSON,$FOLDER_JSON}" > "$FULL_PATH_TO_DOCS_LATEST/bidrag-dev.json"
+echo "Oppretter $BIDRAG_DEV_JSON som $FULL_PATH_TO_DOCS_LATEST/bidrag-dev.json"
+echo "$BIDRAG_DEV_JSON" > "$FULL_PATH_TO_DOCS_LATEST/bidrag-dev.json"
