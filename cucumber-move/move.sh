@@ -13,11 +13,11 @@ set -x
 #
 # Følgende skjer i dette skriptet:
 # 1) setter input
-# 2) FULL_PATH variabler ut fra $PWD/..
+# 2) setter forventet stier til cucumber og bidrag-dev ut fra $RUNNER_WORKSPACE
 # 3) oppretter generert mappe under docs/generated (oppretter timestampted mappe hvis dato-mappe finnes)
 # 4) kopierer generert html til generert mappe
 # 5) sletter gamle genererte html mapper rett under docs/latest mappa
-# 6) flytter (og overskriver gammel) generert html til github pages (docs/latest mappa)
+# 6) flytter generert html til github pages (docs/latest mappa)
 # 7) flytter generert json fil fra input under github pages (docs/latest/<input-fil>)
 # 8) oppretter bidrag-dev.json som inneholder data for denne operasjonen
 #    - timestamp: tidspunktet for flytting
@@ -35,48 +35,49 @@ INPUT_PROJECT_WHERE_TO_MOVE=$2
 INPUT_FRONT_PAGE=$3
 INPUT_LATEST_CUCUMBER_JSON=$4
 
-cd ..
+FULL_PATH_TO_GENERATED_TEST_FILES="$RUNNER_WORKSPACE/$INPUT_FOLDER_MOVE_FROM"
 
-FIRST_LINE_PATH_TO_MOVE_FOLDER=$(find . -type d | grep "$INPUT_FOLDER_MOVE_FROM" | sed 1q)                         # first line of directory match
-FULL_PATH_TO_MOVE_FOLDER="$PWD/$(echo "$FIRST_LINE_PATH_TO_MOVE_FOLDER" | sed 's,^ *,,; s, *$,,')"                 # concat with PWD and remove leading and trailing whitespaces from first line
-FULL_PATH_TO_ROOT_PROJECT="$PWD/$(find . -type f | grep "$INPUT_PROJECT_WHERE_TO_MOVE/$INPUT_FRONT_PAGE" | sed "s;/$INPUT_FRONT_PAGE;;")" # remove front page from string
-FULL_PATH_TO_DOCS_LATEST="$(echo "$FULL_PATH_TO_ROOT_PROJECT/docs/latest" | sed 's;//;/;')"                        # replace // with / in path
-FULL_PATH_TO_DOCS_GENERATED="$(echo "$FULL_PATH_TO_ROOT_PROJECT/docs/generated" | sed 's;//;/;')"                  # replace // with / in path
-FULL_PATH_TO_GENERATED_CUCUMBER_JSON="$PWD/$(find . -type f | grep "$INPUT_LATEST_CUCUMBER_JSON" | sed 's;//;/;')" # replace // with / in path
+if [[ -d "$FULL_PATH_TO_GENERATED_TEST_FILES" ]]; then
+  echo "Full sti til html rapport finnes ikke under $PATH_TO_GENERATED_TEST_FILES"
+  exit 1
+fi
 
-FULL_PATH_TO_MOVE_FOLDER=$(echo "$FULL_PATH_TO_MOVE_FOLDER" | sed 's;/./;/;' | sed "s/'//")                        # replace /./ with / and remove '
-FULL_PATH_TO_ROOT_PROJECT=$(echo "$FULL_PATH_TO_ROOT_PROJECT" | sed 's;/./;/;' | sed "s/'//")                      # replace /./ with / and remove '
-FULL_PATH_TO_DOCS_LATEST=$(echo "$FULL_PATH_TO_DOCS_LATEST" | sed 's;/./;/;' | sed "s/'//")                        # replace /./ with / and remove '
-FULL_PATH_TO_DOCS_GENERATED=$(echo "$FULL_PATH_TO_DOCS_GENERATED" | sed 's;/./;/;' | sed "s/'//")                  # replace /./ with / and remove '
-FULL_PATH_TO_GENERATED_CUCUMBER_JSON=$(echo "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" | sed 's;/./;/;'| sed "s/'//") # replace /./ with / and remove '
+FULL_PATH_TO_ROOT_PROJECT="$RUNNER_WORKSPACE/$INPUT_PROJECT_WHERE_TO_MOVE"
 
-if [[ ! -d "$FULL_PATH_TO_MOVE_FOLDER" ]]; then
-  echo ::error:: "unable to locate folder to move from - $INPUT_FOLDER_MOVE_FROM (using full path: $FULL_PATH_TO_MOVE_FOLDER)"
-  exit 1;
+if [[ -d "$FULL_PATH_TO_ROOT_PROJECT" ]]; then
+  echo "Full sti til prosjektet som skal ha generert test rapport finnes ikke under: $FULL_PATH_TO_ROOT_PROJECT"
+  exit 1
+fi
+
+FULL_PATH_TO_DOCS_LATEST="$FULL_PATH_TO_ROOT_PROJECT/docs/latest"
+FULL_PATH_TO_DOCS_GENERATED="$FULL_PATH_TO_ROOT_PROJECT/docs/generated"
+
+FULL_PATH_TO_GENERATED_CUCUMBER_JSON="$RUNNER_WORKSPACE/$INPUT_LATEST_CUCUMBER_JSON"
+
+if [[ -d "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" ]]; then
+  echo "Full sti til generert cucumber rapport finnes ikke under: $FULL_PATH_TO_GENERATED_CUCUMBER_JSON"
+  exit 1
 fi
 
 GENERATED_FOLDER=$(date +"%Y-%m-%d")
-
-echo "Move generated html from $FULL_PATH_TO_MOVE_FOLDER"
 
 if [[ -d "$FULL_PATH_TO_DOCS_GENERATED/$GENERATED_FOLDER" ]]; then
   GENERATED_FOLDER=$(date +"%Y-%m-%d.%T")
 fi
 
 FULL_PATH_TO_GENERATED_FOLDER="$FULL_PATH_TO_DOCS_GENERATED/$GENERATED_FOLDER"
-mkdir "$FULL_PATH_TO_GENERATED_FOLDER"
 
-echo "Flytter html fra mappe $FULL_PATH_TO_MOVE_FOLDER til mappe $FULL_PATH_TO_DOCS_LATEST"
-echo "Oppretter også en kopi i $FULL_PATH_TO_GENERATED_FOLDER"
+echo "Kopierer generert html og cucumber rapport til $FULL_PATH_TO_GENERATED_FOLDER"
+echo "Flytter generert html fra $FULL_PATH_TO_GENERATED_TEST_FILES"
+echo "Flytter generert html til $FULL_PATH_TO_DOCS_LATEST"
+echo "Flytter også cucumber rapport til $FULL_PATH_TO_DOCS_LATEST"
 
 cp -R "$FULL_PATH_TO_MOVE_FOLDER"/* "$FULL_PATH_TO_GENERATED_FOLDER"/.
 cp "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" "$FULL_PATH_TO_GENERATED_FOLDER/."
 
-# shellcheck disable=SC2011
-cd "$FULL_PATH_TO_DOCS_LATEST" && ls | xargs sudo rm -rf
-
-sudo mv "$FULL_PATH_TO_MOVE_FOLDER"/* .
-sudo mv "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" "$FULL_PATH_TO_DOCS_LATEST/."
+cd "$FULL_PATH_TO_DOCS_LATEST" && ls | xargs sudo rm -rf # sletter eksisterende rapport
+sudo mv "$FULL_PATH_TO_GENERATED_TEST_FILES/* $FULL_PATH_TO_DOCS_LATEST"
+sudo mv "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" "$FULL_PATH_TO_DOCS_LATEST."
 
 TIMESTAMP_JSON="\"timestamp\":\"$( date )\""
 FOLDER_JSON="\"foldername\":\"$GENERATED_FOLDER\""
