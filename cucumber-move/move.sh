@@ -56,7 +56,7 @@ FULL_PATH_TO_DOCS_LATEST="$FULL_PATH_TO_ROOT_PROJECT/docs/latest"
 FULL_PATH_TO_DOCS_GENERATED="$FULL_PATH_TO_ROOT_PROJECT/docs/generated"
 FULL_PATH_TO_GENERATED_CUCUMBER_JSON="$RUNNER_WORKSPACE/$INPUT_LATEST_CUCUMBER_JSON"
 
-if [[ ! -d "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" ]]; then
+if [[ ! -f "$FULL_PATH_TO_GENERATED_CUCUMBER_JSON" ]]; then
   echo "Full sti til generert cucumber rapport finnes ikke under $PWD"
   find . -type d | grep -v docs | grep -v .git | grep -v /src/ | grep -v /apps/ | grep -v /test-classes/
   exit 1
