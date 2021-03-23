@@ -11,6 +11,9 @@
 - link-pages: lager linker av alle oppgitte sider til visning på github pages
 - reports: Lager linker til alle cucumber-raporter til visning på github pages
 
+## Deprecation
+`cucumber-move` is deprecated and the functionality is replaced by `bidrag-scripts/src/kotlin/createCucumberShell.kts`.
+
 ## Release log
 
 versjon | endringstype | beskrivelse
