@@ -18,6 +18,7 @@
 
 versjon | endringstype | beskrivelse
 ---|---|---
+v5.2.0 | endret | `input-json`: feature branch "feature/main.environment" acts as main branch
 v5.2.0 | endret | `cucumber-clone-tags`: output - cucumber path 
 v5.1.0 | endret | `input-json`: input - base path 
 v5.1.0 | endret | `cucumber-clone`: output - cucumber path 
