@@ -64,6 +64,8 @@ done
 
 if [[ $GITHUB_REF == "refs/heads/main" ]]; then
   BRANCH="main"
+elif [[ $GITHUB_REF == "refs/heads/feature/main.environment" ]]; then
+  BRANCH="main"
 else
   BRANCH="feature"
 fi
