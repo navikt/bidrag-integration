@@ -36,7 +36,7 @@ if [[ -n $INPUT_EXTRA_CLONES ]]; then
 fi
 
 cd "$RUNNER_WORKSPACE" || exit 1 # cd til RUNNER_WORKSPACE eller hard exit
-sudo rm -rf "$INPUT_CUCUMBER_PROJECT"
+rm -rf "$INPUT_CUCUMBER_PROJECT"
 BRANCH="${GITHUB_REF#refs/heads/}"
 
 if [[ "$BRANCH" != "main" ]]; then
