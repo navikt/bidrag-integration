@@ -1,5 +1,6 @@
 # bidrag-integration
 ![](https://github.com/navikt/bidrag-integration/workflows/build%20actions/badge.svg)
+dette repoet er bare brukt for å integrere gjennom bidrag-cucumber-backend (som nå er arkivert). Dette repoet har derfor også blitt arkivert
 
 ## Actions dealing with integrations
 
